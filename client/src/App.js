@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import User from './components/User'
 import './App.css';
+import UserAdd from './components/UserAdd';
 import {Table} from 'semantic-ui-react';
 
 class App extends Component {
@@ -55,6 +56,7 @@ class App extends Component {
           }
         </Table.Body>
        </Table>
+       <UserAdd/>
       </div>
     );
   }
