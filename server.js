@@ -34,7 +34,7 @@ app.get('/api/users', (req, res) => {
 app.use('/image', express.static('./upload'));
 
 app.post('/api/users', upload.single('image'),(req,res) => {
-  let sql = 'INSERT INTO USER VALUES (?,?,?,?,?,?,?)';
+  let sql = 'INSERT INTO USER VALUES (?,?,?,?,?)';
   let id = req.body.id;
   let pw = req.body.pw;
   let name = req.body.name;
@@ -45,11 +45,11 @@ app.post('/api/users', upload.single('image'),(req,res) => {
   console.log(id);
   console.log(pw);
   console.log(name);
-  console.log(p1);
+  console.log(p1+p2+p3);
   console.log(p2);
   console.log(p3);
   console.log(email);
-  let parms = [id,pw,name,p1,p2,p3,email];
+  let parms = [id,pw,name,p1+p2+p3,email];
   connection.query(sql,parms,
     (err, rows, fields) => {
       res.send(rows);
