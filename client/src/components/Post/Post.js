@@ -11,9 +11,7 @@ const Post = ({ users }) => (
           <Table.HeaderCell>id</Table.HeaderCell>
           <Table.HeaderCell>pw</Table.HeaderCell>
           <Table.HeaderCell>name</Table.HeaderCell>
-          <Table.HeaderCell>p1</Table.HeaderCell>
-          <Table.HeaderCell>p2</Table.HeaderCell>
-          <Table.HeaderCell>p3</Table.HeaderCell>
+          <Table.HeaderCell>phone</Table.HeaderCell>
           <Table.HeaderCell>email</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -26,7 +24,7 @@ const Post = ({ users }) => (
                   id={c.id}
                   pw={c.pw}
                   name={c.name}
-                  p1={c.phone}
+                  phone={c.phone}
                   email={c.email}
                 />
               );
