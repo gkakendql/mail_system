@@ -23,6 +23,7 @@ const multer = require('multer');
 const upload = multer({dest: './upload'});
 
 app.get('/api/users', (req, res) => {
+    console.log(res);
     connection.query(
         'SELECT * FROM USER',
         (err, rows, fields) => {
@@ -46,8 +47,6 @@ app.post('/api/users', upload.single('image'),(req,res) => {
   console.log(pw);
   console.log(name);
   console.log(p1+p2+p3);
-  console.log(p2);
-  console.log(p3);
   console.log(email);
   let parms = [id,pw,name,p1+p2+p3,email];
   connection.query(sql,parms,

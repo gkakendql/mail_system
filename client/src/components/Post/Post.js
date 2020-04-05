@@ -1,0 +1,40 @@
+import React from "react";
+import User from '../User'
+import { Table } from "semantic-ui-react";
+import "./Post.css";
+
+const Post = ({ users }) => (
+  <div className="Post">
+    <Table>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>id</Table.HeaderCell>
+          <Table.HeaderCell>pw</Table.HeaderCell>
+          <Table.HeaderCell>name</Table.HeaderCell>
+          <Table.HeaderCell>p1</Table.HeaderCell>
+          <Table.HeaderCell>p2</Table.HeaderCell>
+          <Table.HeaderCell>p3</Table.HeaderCell>
+          <Table.HeaderCell>email</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {users
+          ? users.map(c => {
+              return (
+                <User
+                  key={c.id}
+                  id={c.id}
+                  pw={c.pw}
+                  name={c.name}
+                  p1={c.phone}
+                  email={c.email}
+                />
+              );
+            })
+          : ""}
+      </Table.Body>
+    </Table>
+  </div>
+);
+
+export default Post;
