@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { PostWrapper, Post } from "../../components";
+import Layout from "../../components/Layout";
 
 class PostContainer extends Component {
   state = {
@@ -19,9 +20,11 @@ class PostContainer extends Component {
   };
   render() {
     return (
+    <Layout>
       <PostWrapper>
         <Post users={this.state.users}/>
       </PostWrapper>
+    </Layout>
     );
   }
 }
