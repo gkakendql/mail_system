@@ -3,9 +3,10 @@
   contract MailFactory {
       address[] public deployedMails;
 
-      function createMail() public{
+      function createMail() public returns(address){
           address newMail = new Mail(msg.sender);// manager address로 변경 하기
           deployedMails.push(newMail);
+          return newMail;
       }
 
       function getDeployedMails() public view returns (address[]){
