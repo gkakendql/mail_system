@@ -92,10 +92,11 @@ const DesktopContainer = ({ children, getWidth }) => (
                     <label>-</label>
                     <Input style={{ maxWidth: "5em" }} />
                   </Form.Field>
+                  <Button onClick={jusoPopup}>Submit</Button>
                 </Form.Group>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}></label>
-                  <Input style={{ minWidth: "30em" }} />
+                  <Input id="sendAddr" style={{ minWidth: "30em" }} />
                 </Form.Field>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}></label>
@@ -478,4 +479,18 @@ Homepage.getInitialProps = async ({ req }) => {
   };
 };
 
-export default Homepage;
+function jusoPopup() {
+  window.open("juso", "주소창", "width=508, height=453, location = no");
+}
+
+class App extends Component {
+  componentDidUpdate() {
+    //주소 갱신하는거 넣어야함
+    window.addEventListener("message");
+  }
+  render() {
+    return <Homepage />;
+  }
+}
+
+export default App;
