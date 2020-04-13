@@ -171,7 +171,7 @@ class signUp extends Component {
                   </Form.Field>
                   <Form.Field>
                     <Button type="submit" basic color="violet">
-                      접수 완료
+                      가입 완료
                     </Button>
                     <Link to="/">
                       <Button type="submit" basic color="teal">
