@@ -33,6 +33,18 @@ class signUp extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
     this.makeAddress();
+
+    //window.location.reload();
+  };
+
+  makeAddress = async () => {
+    const accounts = await web3.eth.getAccounts();
+    const test = await factory.methods.createMail();
+    address = await test.call();
+    console.log(address);
+    test.send({
+      from: accounts[0]
+    });
     this.addUser().then(response => {
       console.log(response.data);
     });
@@ -46,17 +58,6 @@ class signUp extends Component {
       email: ""
     });
     address= "";
-    //window.location.reload();
-  };
-
-  makeAddress = async () => {
-    const accounts = await web3.eth.getAccounts();
-    const test = await factory.methods.createMail();
-    address = await test.call();
-    console.log(address);
-    test.send({
-      from: accounts[0]
-    });
   };
 
   handleValueChange = e => {
