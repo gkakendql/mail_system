@@ -6,7 +6,7 @@ import {
   Table,
   Dropdown,
   Label,
-  Icon
+  Icon,Message
 } from "semantic-ui-react";
 import { post } from "axios";
 import { Link } from "react-router-dom";
@@ -20,6 +20,9 @@ class signUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      errorMessage: "",
+      loading: false,
+      success: false,
       id: "",
       pw: "",
       name: "",
@@ -38,16 +41,27 @@ class signUp extends Component {
   };
 
   makeAddress = async () => {
-    const accounts = await web3.eth.getAccounts();
-    const test = await factory.methods.createMail();
-    address = await test.call();
-    console.log(address);
-    test.send({
-      from: accounts[0]
-    });
-    this.addUser().then(response => {
-      console.log(response.data);
-    });
+    this.setState({ loading: true });
+    try{
+        const accounts = await web3.eth.getAccounts();
+        const test = await factory.methods.createMail();
+        address = await test.call();
+        console.log(address);
+        await test.send({
+          from: accounts[0]
+        });
+        this.setState({ success: true });
+  } catch (err) {
+    this.setState({ errorMessage: err.message});
+  }
+    this.setState({ loading: false });
+    if(this.state.success == true)
+    {
+      this.addUser().then(response => {
+        console.log(response.data);
+      });
+    }
+
     this.setState({
       id: "",
       pw: "",
@@ -55,9 +69,11 @@ class signUp extends Component {
       p1: "",
       p2: "",
       p3: "",
-      email: ""
+      email: "",
+      success: false
     });
     address= "";
+    console.log(address);
   };
 
   handleValueChange = e => {
@@ -97,7 +113,7 @@ class signUp extends Component {
           <Table.Body>
             <Table.Row>
               <Table.Cell>
-                <Form onSubmit={this.handleFormSubmit}>
+                <Form onSubmit={this.handleFormSubmit} error={this.state.errorMessage}>
                   <Form.Field inline>
                     <label style={{ minWidth: "6em" }}>아이디</label>
                     <Input
@@ -171,7 +187,8 @@ class signUp extends Component {
                     />
                   </Form.Field>
                   <Form.Field>
-                    <Button type="submit" basic color="violet">
+                    <Message error header="Oops!" content={this.state.errorMessage}/>
+                    <Button loading={this.state.loading} type="submit" basic color="violet">
                       가입 완료
                     </Button>
                     <Link to="/">

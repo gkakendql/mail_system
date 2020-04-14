@@ -11,3 +11,7 @@
 .Post p {
   font-size: 2rem;
 }
+
+.name {
+  width: 200px;
+}

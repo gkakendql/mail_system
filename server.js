@@ -32,17 +32,6 @@ app.get('/api/users', (req, res) => {
     )
 });
 
-app.get('/api/login', (req, res) => {
-    console.log(res);
-    let id = 'apple';
-    connection.query(
-        'SELECT * FROM USER WHERE id ='+'\''+id+'\'',
-        (err, rows, fields) => {
-            res.send(rows);
-        }
-    )
-});
-
 app.use('/image', express.static('./upload'));
 
 app.post('/api/users', upload.single('image'),(req,res) => {

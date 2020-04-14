@@ -1,7 +1,8 @@
 import React from "react";
-import User from '../User'
+import User from '../User';
 import { Table } from "semantic-ui-react";
 import "./Post.css";
+import 'semantic-ui-css/semantic.min.css';
 
 const Post = ({ users }) => (
   <div className="Post">
@@ -10,9 +11,10 @@ const Post = ({ users }) => (
         <Table.Row>
           <Table.HeaderCell>id</Table.HeaderCell>
           <Table.HeaderCell>pw</Table.HeaderCell>
-          <Table.HeaderCell>name</Table.HeaderCell>
+          <Table.HeaderCell className="name">name</Table.HeaderCell>
           <Table.HeaderCell>phone</Table.HeaderCell>
           <Table.HeaderCell>email</Table.HeaderCell>
+          <Table.HeaderCell>address</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -26,6 +28,7 @@ const Post = ({ users }) => (
                   name={c.name}
                   phone={c.phone}
                   email={c.email}
+                  address={c.address}
                 />
               );
             })
