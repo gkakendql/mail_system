@@ -55,11 +55,13 @@ class signUp extends Component {
     this.setState({ errorMessage: err.message});
   }
     this.setState({ loading: false });
+
     if(this.state.success == true)
     {
       this.addUser().then(response => {
         console.log(response.data);
       });
+      alert("가입 완료");
     }
 
     this.setState({
