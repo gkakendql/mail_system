@@ -15,6 +15,8 @@ import {
 } from "semantic-ui-react";
 import factory from "../ethereum/factory";
 
+let opt;
+
 const gdsVol = [
   {
     key: "ss",
@@ -38,7 +40,7 @@ const gdsVol = [
   }
 ];
 
-const DesktopContainer = ({ children, getWidth }) => (
+const DesktopContainer = ({ children, getWidth, state }) => (
   <Responsive
     fireOnMount
     getWidth={getWidth}
@@ -57,25 +59,25 @@ const DesktopContainer = ({ children, getWidth }) => (
               <Form>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}>이름</label>
-                  <Input style={{ minWidth: "30em" }} />
+                  <Input id="Sname" style={{ minWidth: "30em" }} />
                 </Form.Field>
                 <Form.Group inline>
                   <Form.Field>
                     <label style={{ minWidth: "6em" }}>연락처</label>
-                    <Input style={{ maxWidth: "5em" }} />
+                    <Input id="Sp1" style={{ maxWidth: "5em" }} />
                   </Form.Field>
                   <Form.Field>
                     <label>-</label>
-                    <Input style={{ maxWidth: "5em" }} />
+                    <Input id="Sp2" style={{ maxWidth: "5em" }} />
                   </Form.Field>
                   <Form.Field>
                     <label>-</label>
-                    <Input style={{ maxWidth: "5em" }} />
+                    <Input id="Sp3" style={{ maxWidth: "5em" }} />
                   </Form.Field>
                 </Form.Group>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}>이메일</label>
-                  <Input style={{ minWidth: "30em" }} />
+                  <Input id="Semail" style={{ minWidth: "30em" }} />
                 </Form.Field>
               </Form>
             </Table.Cell>
@@ -86,21 +88,17 @@ const DesktopContainer = ({ children, getWidth }) => (
                 <Form.Group inline>
                   <Form.Field>
                     <label style={{ minWidth: "6em" }}>주소</label>
-                    <Input style={{ maxWidth: "5em" }} />
+                    <Input id="Szip" value={state.Spost} style={{ maxWidth: "8em" }} />
                   </Form.Field>
-                  <Form.Field>
-                    <label>-</label>
-                    <Input style={{ maxWidth: "5em" }} />
-                  </Form.Field>
-                  <Button onClick={jusoPopup}>Submit</Button>
+                  <Button onClick={senderJusoPopup}>Submit</Button>
                 </Form.Group>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}></label>
-                  <Input id="sendAddr" style={{ minWidth: "30em" }} />
+                  <Input id="Saddr1" value={state.Saddr1} style={{ minWidth: "30em" }} />
                 </Form.Field>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}></label>
-                  <Input style={{ minWidth: "30em" }} />
+                  <Input id="Saddr2" style={{ minWidth: "30em" }} />
                 </Form.Field>
               </Form>
             </Table.Cell>
@@ -117,20 +115,20 @@ const DesktopContainer = ({ children, getWidth }) => (
               <Form>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}>이름</label>
-                  <Input style={{ minWidth: "30em" }} />
+                  <Input id="Rname" style={{ minWidth: "30em" }} />
                 </Form.Field>
                 <Form.Group inline>
                   <Form.Field>
                     <label style={{ minWidth: "6em" }}>연락처</label>
-                    <Input style={{ maxWidth: "5em" }} />
+                    <Input id="Rp1" style={{ maxWidth: "5em" }} />
                   </Form.Field>
                   <Form.Field>
                     <label>-</label>
-                    <Input style={{ maxWidth: "5em" }} />
+                    <Input id="Rp2" style={{ maxWidth: "5em" }} />
                   </Form.Field>
                   <Form.Field>
                     <label>-</label>
-                    <Input style={{ maxWidth: "5em" }} />
+                    <Input id="Rp3" style={{ maxWidth: "5em" }} />
                   </Form.Field>
                 </Form.Group>
               </Form>
@@ -142,20 +140,17 @@ const DesktopContainer = ({ children, getWidth }) => (
                 <Form.Group inline>
                   <Form.Field>
                     <label style={{ minWidth: "6em" }}>주소</label>
-                    <Input style={{ maxWidth: "5em" }} />
+                    <Input id="Rzip" value={state.Rpost} style={{ maxWidth: "8em" }} />
                   </Form.Field>
-                  <Form.Field>
-                    <label>-</label>
-                    <Input style={{ maxWidth: "6em" }} />
-                  </Form.Field>
+                  <Button onClick={receiverJusoPopup}>Submit</Button>
                 </Form.Group>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}></label>
-                  <Input style={{ minWidth: "30em" }} />
+                  <Input id="Raddr1" value={state.Raddr1} style={{ minWidth: "30em" }} />
                 </Form.Field>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}></label>
-                  <Input style={{ minWidth: "30em" }} />
+                  <Input id="Raddr2" style={{ minWidth: "30em" }} />
                 </Form.Field>
               </Form>
             </Table.Cell>
@@ -172,12 +167,12 @@ const DesktopContainer = ({ children, getWidth }) => (
               <Form>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}>상품명</label>
-                  <Input style={{ minWidth: "30em" }} />
+                  <Input id="Iname" style={{ minWidth: "30em" }} />
                 </Form.Field>
                 <Form.Group inline>
                   <Form.Field>
                     <label style={{ minWidth: "6em" }}>상품가격</label>
-                    <Input style={{ maxWidth: "15em" }} />
+                    <Input id="Iprice" style={{ maxWidth: "15em" }} />
                   </Form.Field>
                   <Form.Field>
                     <label>원</label>
@@ -186,7 +181,7 @@ const DesktopContainer = ({ children, getWidth }) => (
                 <Form.Group inline>
                   <Form.Field>
                     <label style={{ minWidth: "6em" }}>포장수량</label>
-                    <Input style={{ maxWidth: "15em" }} />
+                    <Input id="Iamount" style={{ maxWidth: "15em" }} />
                   </Form.Field>
                   <Form.Field>
                     <label>박스 (BOX)</label>
@@ -202,7 +197,7 @@ const DesktopContainer = ({ children, getWidth }) => (
                 </Form.Field>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}>특이사항 기재</label>
-                  <Input style={{ minWidth: "30em" }} />
+                  <Input id="Ietc" style={{ minWidth: "30em" }} />
                 </Form.Field>
               </Form>
             </Table.Cell>
@@ -212,7 +207,11 @@ const DesktopContainer = ({ children, getWidth }) => (
               <Form>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}>비밀번호</label>
-                  <Input style={{ minWidth: "30em" }} />
+                  <Input
+                    id="pass"
+                    type="password"
+                    style={{ minWidth: "30em" }}
+                  />
                 </Form.Field>
               </Form>
             </Table.Cell>
@@ -227,7 +226,7 @@ const DesktopContainer = ({ children, getWidth }) => (
   </Responsive>
 );
 
-const MobileContainer = ({ children, getWidth }) => (
+const MobileContainer = ({ children, getWidth, state }) => (
   <Responsive
     fireOnMount
     getWidth={getWidth}
@@ -245,25 +244,25 @@ const MobileContainer = ({ children, getWidth }) => (
             <Form>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}>이름</label>
-                <Input style={{ minWidth: "15em" }} />
+                <Input id="Sname" style={{ minWidth: "15em" }} />
               </Form.Field>
               <Form.Group inline>
                 <Form.Field>
                   <label style={{ minWidth: "5em" }}>연락처</label>
-                  <Input style={{ maxWidth: "5em" }} />
+                  <Input id="Sp1" style={{ maxWidth: "5em" }} />
                 </Form.Field>
                 <Form.Field>
                   <label>-</label>
-                  <Input style={{ maxWidth: "5em" }} />
+                  <Input id="Sp2" style={{ maxWidth: "5em" }} />
                 </Form.Field>
                 <Form.Field>
                   <label>-</label>
-                  <Input style={{ maxWidth: "5em" }} />
+                  <Input id="Sp3" style={{ maxWidth: "5em" }} />
                 </Form.Field>
               </Form.Group>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}>이메일</label>
-                <Input style={{ minWidth: "15em" }} />
+                <Input id="Semail" style={{ minWidth: "15em" }} />
               </Form.Field>
             </Form>
           </Table.Cell>
@@ -274,20 +273,17 @@ const MobileContainer = ({ children, getWidth }) => (
               <Form.Group inline>
                 <Form.Field>
                   <label style={{ minWidth: "5em" }}>주소</label>
-                  <Input style={{ maxWidth: "5em" }} />
+                  <Input id="Szip" value={state.Spost} style={{ maxWidth: "8em" }} />
                 </Form.Field>
-                <Form.Field>
-                  <label>-</label>
-                  <Input style={{ maxWidth: "5em" }} />
-                </Form.Field>
+                <Button onClick={senderJusoPopup}>Submit</Button>
               </Form.Group>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}></label>
-                <Input style={{ minWidth: "15em" }} />
+                <Input id="Saddr1" value={state.Saddr1} style={{ minWidth: "15em" }} />
               </Form.Field>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}></label>
-                <Input style={{ minWidth: "15em" }} />
+                <Input id="Saddr2" style={{ minWidth: "15em" }} />
               </Form.Field>
             </Form>
           </Table.Cell>
@@ -304,20 +300,20 @@ const MobileContainer = ({ children, getWidth }) => (
             <Form>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}>이름</label>
-                <Input style={{ minWidth: "15em" }} />
+                <Input id="Rname" style={{ minWidth: "15em" }} />
               </Form.Field>
               <Form.Group inline>
                 <Form.Field>
                   <label style={{ minWidth: "5em" }}>연락처</label>
-                  <Input style={{ maxWidth: "5em" }} />
+                  <Input id="Rp1" style={{ maxWidth: "5em" }} />
                 </Form.Field>
                 <Form.Field>
                   <label>-</label>
-                  <Input style={{ maxWidth: "5em" }} />
+                  <Input id="Rp2" style={{ maxWidth: "5em" }} />
                 </Form.Field>
                 <Form.Field>
                   <label>-</label>
-                  <Input style={{ maxWidth: "5em" }} />
+                  <Input id="Rp3" style={{ maxWidth: "5em" }} />
                 </Form.Field>
               </Form.Group>
             </Form>
@@ -329,20 +325,17 @@ const MobileContainer = ({ children, getWidth }) => (
               <Form.Group inline>
                 <Form.Field>
                   <label style={{ minWidth: "5em" }}>주소</label>
-                  <Input style={{ maxWidth: "5em" }} />
+                  <Input id="Rzip" value={state.Rpost} style={{ maxWidth: "8em" }} />
                 </Form.Field>
-                <Form.Field>
-                  <label>-</label>
-                  <Input style={{ maxWidth: "5em" }} />
-                </Form.Field>
+                <Button onClick={receiverJusoPopup}>Submit</Button>
               </Form.Group>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}></label>
-                <Input style={{ minWidth: "15em" }} />
+                <Input id="Raddr1" value={state.Raddr1} style={{ minWidth: "15em" }} />
               </Form.Field>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}></label>
-                <Input style={{ minWidth: "15em" }} />
+                <Input id="Raddr2" style={{ minWidth: "15em" }} />
               </Form.Field>
             </Form>
           </Table.Cell>
@@ -359,12 +352,12 @@ const MobileContainer = ({ children, getWidth }) => (
             <Form>
               <Form.Field inline>
                 <label style={{ minWidth: "6em" }}>상품명</label>
-                <Input style={{ minWidth: "15em" }} />
+                <Input id="Iname" style={{ minWidth: "15em" }} />
               </Form.Field>
               <Form.Group inline>
                 <Form.Field>
                   <label style={{ minWidth: "6em" }}>상품가격</label>
-                  <Input style={{ maxWidth: "15em" }} />
+                  <Input id="Iprice" style={{ maxWidth: "15em" }} />
                 </Form.Field>
                 <Form.Field>
                   <label>원</label>
@@ -373,7 +366,7 @@ const MobileContainer = ({ children, getWidth }) => (
               <Form.Group inline>
                 <Form.Field>
                   <label style={{ minWidth: "6em" }}>포장수량</label>
-                  <Input style={{ maxWidth: "10em" }} />
+                  <Input id="Iamount" style={{ maxWidth: "10em" }} />
                 </Form.Field>
                 <Form.Field>
                   <label>박스 (BOX)</label>
@@ -389,7 +382,7 @@ const MobileContainer = ({ children, getWidth }) => (
               </Form.Field>
               <Form.Field inline>
                 <label style={{ minWidth: "6em" }}>특이사항 기재</label>
-                <Input style={{ minWidth: "15em" }} />
+                <Input id="Ietc" style={{ minWidth: "15em" }} />
               </Form.Field>
             </Form>
           </Table.Cell>
@@ -399,24 +392,11 @@ const MobileContainer = ({ children, getWidth }) => (
             <Form>
               <Form.Field inline>
                 <label style={{ minWidth: "6em" }}>비밀번호</label>
-                <Input style={{ minWidth: "15em" }} />
+                <Input id="pass" type="password" style={{ minWidth: "15em" }} />
               </Form.Field>
             </Form>
           </Table.Cell>
-          <Table.Cell />
-          <Table.Cell />
           <Table.Cell>
-            <Form>
-              <Form.Field inline>
-                <label></label>
-              </Form.Field>
-              <Form.Field inline>
-                <label></label>
-              </Form.Field>
-              <Form.Field inline>
-                <label></label>
-              </Form.Field>
-            </Form>
             <Button attached="bottom">접수 완료</Button>
           </Table.Cell>
         </Table.Row>
@@ -427,14 +407,14 @@ const MobileContainer = ({ children, getWidth }) => (
   </Responsive>
 );
 
-const ResponsiveContainer = ({ children, getWidth }) => (
+const ResponsiveContainer = ({ children, getWidth, state }) => (
   <React.Fragment>
-    <DesktopContainer getWidth={getWidth}>{children}</DesktopContainer>
-    <MobileContainer getWidth={getWidth}>{children}</MobileContainer>
+    <DesktopContainer getWidth={getWidth} state={state}>{children}</DesktopContainer>
+    <MobileContainer getWidth={getWidth} state={state}>{children}</MobileContainer>
   </React.Fragment>
 );
 
-const Homepage = ({ deviceInfo, isMobileFromSSR }) => (
+const Homepage = ({ deviceInfo, isMobileFromSSR, state }) => (
   <React.Fragment>
     <Head>
       <title>Semantic UI React: Responsive & SSR</title>
@@ -450,7 +430,7 @@ const Homepage = ({ deviceInfo, isMobileFromSSR }) => (
     </Head>
 
     <Container>
-      <ResponsiveContainer getWidth={getWidthFactory(isMobileFromSSR)} />
+      <ResponsiveContainer getWidth={getWidthFactory(isMobileFromSSR)} state={state}/>
     </Container>
   </React.Fragment>
 );
@@ -479,17 +459,44 @@ Homepage.getInitialProps = async ({ req }) => {
   };
 };
 
-function jusoPopup() {
+function senderJusoPopup() {
+  opt = 0;
+  window.open("juso", "주소창", "width=508, height=453, location = no");
+}
+
+function receiverJusoPopup() {
+  opt = 1;
   window.open("juso", "주소창", "width=508, height=453, location = no");
 }
 
 class App extends Component {
-  componentDidUpdate() {
-    //주소 갱신하는거 넣어야함
-    window.addEventListener("message");
-  }
+  state = {
+    Spost: "",
+    Saddr1: "",
+    Rpost: "",
+    Raddr1: ""
+  };
+
+  testF = (data) => {
+    console.log(this);
+    if (opt == 0) {
+      this.setState({
+        Spost: data.zonecode,
+        Saddr1: data.address
+      });
+      console.log(this.state);
+    } else {
+      this.setState({
+        Rpost: data.zonecode,
+        Raddr1: data.address
+      });
+      console.log(this.state);
+    }
+  };
+
   render() {
-    return <Homepage />;
+    window.testF = this.testF;
+    return <Homepage state={this.state}/>;
   }
 }
 

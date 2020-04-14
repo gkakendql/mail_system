@@ -3,16 +3,15 @@ import { Route } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 
 class App extends Component {
+  handleData = data => {
+    window.opener.testF(data);
+    window.close();
+  };
   render() {
     return (
-        <DaumPostcode onComplete={handleData} height={450} />
+        <DaumPostcode onComplete={this.handleData} height={450} />
     );
   }
 }
-
-const handleData = data => {
-  window.postMessage(data);
-  window.close();
-};
 
 export default App;
