@@ -81,6 +81,9 @@ class Login extends Component {
       if (this.state.users[i].pw === this.state.pw) {
         console.log("pw success");
         alert("로그인 성공");
+        const url = this.state.users[i].address;
+        return this.props.history.push('/'+url);
+
       } else {
         console.log("pw fail");
         alert("로그인 실패");
