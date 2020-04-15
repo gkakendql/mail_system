@@ -4,16 +4,13 @@ import React, { Component } from "react";
 import Layout from "../components/Layout";
 import {
   Container,
-  Message,
   Responsive,
   Input,
   Form,
   Button,
   Table,
-  Dropdown,
-  Segment
+  Dropdown
 } from "semantic-ui-react";
-import factory from "../ethereum/factory";
 
 let opt;
 
@@ -88,13 +85,21 @@ const DesktopContainer = ({ children, getWidth, state }) => (
                 <Form.Group inline>
                   <Form.Field>
                     <label style={{ minWidth: "6em" }}>주소</label>
-                    <Input id="Szip" value={state.Spost} style={{ maxWidth: "8em" }} />
+                    <Input
+                      id="Szip"
+                      value={state.Spost}
+                      style={{ maxWidth: "8em" }}
+                    />
                   </Form.Field>
                   <Button onClick={senderJusoPopup}>Submit</Button>
                 </Form.Group>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}></label>
-                  <Input id="Saddr1" value={state.Saddr1} style={{ minWidth: "30em" }} />
+                  <Input
+                    id="Saddr1"
+                    value={state.Saddr1}
+                    style={{ minWidth: "30em" }}
+                  />
                 </Form.Field>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}></label>
@@ -140,13 +145,21 @@ const DesktopContainer = ({ children, getWidth, state }) => (
                 <Form.Group inline>
                   <Form.Field>
                     <label style={{ minWidth: "6em" }}>주소</label>
-                    <Input id="Rzip" value={state.Rpost} style={{ maxWidth: "8em" }} />
+                    <Input
+                      id="Rzip"
+                      value={state.Rpost}
+                      style={{ maxWidth: "8em" }}
+                    />
                   </Form.Field>
                   <Button onClick={receiverJusoPopup}>Submit</Button>
                 </Form.Group>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}></label>
-                  <Input id="Raddr1" value={state.Raddr1} style={{ minWidth: "30em" }} />
+                  <Input
+                    id="Raddr1"
+                    value={state.Raddr1}
+                    style={{ minWidth: "30em" }}
+                  />
                 </Form.Field>
                 <Form.Field inline>
                   <label style={{ minWidth: "6em" }}></label>
@@ -273,13 +286,21 @@ const MobileContainer = ({ children, getWidth, state }) => (
               <Form.Group inline>
                 <Form.Field>
                   <label style={{ minWidth: "5em" }}>주소</label>
-                  <Input id="Szip" value={state.Spost} style={{ maxWidth: "8em" }} />
+                  <Input
+                    id="Szip"
+                    value={state.Spost}
+                    style={{ maxWidth: "8em" }}
+                  />
                 </Form.Field>
                 <Button onClick={senderJusoPopup}>Submit</Button>
               </Form.Group>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}></label>
-                <Input id="Saddr1" value={state.Saddr1} style={{ minWidth: "15em" }} />
+                <Input
+                  id="Saddr1"
+                  value={state.Saddr1}
+                  style={{ minWidth: "15em" }}
+                />
               </Form.Field>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}></label>
@@ -325,13 +346,21 @@ const MobileContainer = ({ children, getWidth, state }) => (
               <Form.Group inline>
                 <Form.Field>
                   <label style={{ minWidth: "5em" }}>주소</label>
-                  <Input id="Rzip" value={state.Rpost} style={{ maxWidth: "8em" }} />
+                  <Input
+                    id="Rzip"
+                    value={state.Rpost}
+                    style={{ maxWidth: "8em" }}
+                  />
                 </Form.Field>
                 <Button onClick={receiverJusoPopup}>Submit</Button>
               </Form.Group>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}></label>
-                <Input id="Raddr1" value={state.Raddr1} style={{ minWidth: "15em" }} />
+                <Input
+                  id="Raddr1"
+                  value={state.Raddr1}
+                  style={{ minWidth: "15em" }}
+                />
               </Form.Field>
               <Form.Field inline>
                 <label style={{ minWidth: "5em" }}></label>
@@ -409,8 +438,12 @@ const MobileContainer = ({ children, getWidth, state }) => (
 
 const ResponsiveContainer = ({ children, getWidth, state }) => (
   <React.Fragment>
-    <DesktopContainer getWidth={getWidth} state={state}>{children}</DesktopContainer>
-    <MobileContainer getWidth={getWidth} state={state}>{children}</MobileContainer>
+    <DesktopContainer getWidth={getWidth} state={state}>
+      {children}
+    </DesktopContainer>
+    <MobileContainer getWidth={getWidth} state={state}>
+      {children}
+    </MobileContainer>
   </React.Fragment>
 );
 
@@ -430,7 +463,10 @@ const Homepage = ({ deviceInfo, isMobileFromSSR, state }) => (
     </Head>
 
     <Container>
-      <ResponsiveContainer getWidth={getWidthFactory(isMobileFromSSR)} state={state}/>
+      <ResponsiveContainer
+        getWidth={getWidthFactory(isMobileFromSSR)}
+        state={state}
+      />
     </Container>
   </React.Fragment>
 );
@@ -477,9 +513,9 @@ class App extends Component {
     Raddr1: ""
   };
 
-  testF = (data) => {
+  testF = data => {
     console.log(this);
-    if (opt == 0) {
+    if (opt === 0) {
       this.setState({
         Spost: data.zonecode,
         Saddr1: data.address
@@ -496,7 +532,7 @@ class App extends Component {
 
   render() {
     window.testF = this.testF;
-    return <Homepage state={this.state}/>;
+    return <Homepage state={this.state} />;
   }
 }
 

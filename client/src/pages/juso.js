@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 
 class App extends Component {
@@ -8,9 +7,7 @@ class App extends Component {
     window.close();
   };
   render() {
-    return (
-        <DaumPostcode onComplete={this.handleData} height={450} />
-    );
+    return <DaumPostcode onComplete={this.handleData} height={450} />;
   }
 }
 
