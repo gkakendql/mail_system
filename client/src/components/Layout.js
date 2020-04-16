@@ -5,7 +5,7 @@ import Header from './Header';
 
 export default props => {
   return (
-    <Container style={{width:"700px", padding:40}}>
+    <Container style={{width:"800px", padding:40}}>
       <Head>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
       </Head>

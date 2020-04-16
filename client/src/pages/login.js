@@ -142,9 +142,6 @@ class Login extends Component {
               <Link to="/signUp"> 회원가입</Link>
             </Message>
             <Message>
-              <Link to="/addMail">택배 등록</Link>
-            </Message>
-            <Message>
               <Link to="/list">회원 목록</Link>
             </Message>
           </Grid.Column>

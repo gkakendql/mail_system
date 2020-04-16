@@ -14,10 +14,10 @@ class App extends Component {
         <div align="center">
           <Route exact path="/" component={login}/>
           <Route path="/signUp" component={signUp}/>
-          <Route path="/addMail" component={addMail}/>
           <Route path="/list" component={list}/>
           <Route path="/juso" component={juso}/>
           <Route exact path="/mail/:address" component={mailList}/>
+          <Route exact path="/mail/:address/addMail" component={addMail}/>
         </div>
     );
   }
