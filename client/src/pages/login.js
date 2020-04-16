@@ -82,7 +82,7 @@ class Login extends Component {
         console.log("pw success");
         alert("로그인 성공");
         const url = this.state.users[i].address;
-        return this.props.history.push('/'+url);
+        return this.props.history.push('/mail/'+url);
 
       } else {
         console.log("pw fail");
