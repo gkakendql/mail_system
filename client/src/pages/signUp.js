@@ -3,8 +3,6 @@ import { Input, Form, Button, Table, Message } from "semantic-ui-react";
 import { post } from "axios";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
-import factory from "../ethereum/factory";
-import web3 from "../ethereum/web3";
 
 let address;
 
@@ -35,13 +33,10 @@ class signUp extends Component {
   makeAddress = async () => {
     this.setState({ loading: true });
     try {
-      const accounts = await web3.eth.getAccounts();
-      const test = await factory.methods.createMail();
-      address = await test.call();
+      const response = await post("/api/address");
+      console.log(response);
+      address = response.data;
       console.log(address);
-      await test.send({
-        from: accounts[0]
-      });
       this.setState({ success: true });
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -75,7 +70,7 @@ class signUp extends Component {
     this.setState(nextState);
   };
 
-  addUser = async () => {
+  addUser = () => {
     const url = "/api/users";
     const formData = new FormData();
     formData.append("id", this.state.id);

@@ -1,3 +1,6 @@
+const web3 = require("./ethereum/test");
+const factory = require("./ethereum/factory");
+
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -23,7 +26,6 @@ const multer = require('multer');
 const upload = multer({dest: './upload'});
 
 app.get('/api/users', (req, res) => {
-    console.log(res);
     connection.query(
         'SELECT * FROM USER',
         (err, rows, fields) => {
@@ -33,6 +35,23 @@ app.get('/api/users', (req, res) => {
 });
 
 app.use('/image', express.static('./upload'));
+
+app.post('/api/address', async (req,res)=>{
+  try {
+    const accounts = await web3.eth.getAccounts();
+    console.log(accounts);
+    const test = await factory.methods.createMail();
+    const address = await test.call();
+    console.log(address);
+    await test.send({
+      from: accounts[0],
+      gas:1500000
+    });
+    res.send(address);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
 
 app.post('/api/users', upload.single('image'),(req,res) => {
   let sql = 'INSERT INTO USER VALUES (?,?,?,?,?,?)';

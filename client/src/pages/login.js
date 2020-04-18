@@ -9,16 +9,9 @@ import {
   Segment,
   Input
 } from "semantic-ui-react";
-import factory from "../ethereum/factory";
 import { Link } from "react-router-dom";
 
 class Login extends Component {
-  static async getInitialProps() {
-    //157lecture
-    const mails = await factory.methods.getDeployedMails().call();
-
-    return { mails: mails };
-  }
 
   state = {
     users: ""
