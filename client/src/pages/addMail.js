@@ -2,6 +2,7 @@ import MobileDetect from "mobile-detect";
 import Head from "next/head";
 import React, { Component } from "react";
 import Layout from "../components/Layout";
+import { Link } from "react-router-dom";
 import {
   Container,
   Responsive,
@@ -44,6 +45,11 @@ const DesktopContainer = ({ children, getWidth, state }) => (
     minWidth={Responsive.onlyTablet.minWidth}
   >
     <Layout>
+      <Link to="/mail/:address">
+        <Button basic color='purple'>뒤로 가기(임시)</Button>
+      </Link>
+
+
       <Table singleLine>
         <Table.Header>
           <Table.Row>
