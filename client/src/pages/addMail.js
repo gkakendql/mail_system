@@ -503,12 +503,12 @@ Homepage.getInitialProps = async ({ req }) => {
 
 function senderJusoPopup() {
   opt = 0;
-  window.open("juso", "주소창", "width=508, height=453, location = no");
+  window.open("../../juso", "주소창", "width=508, height=453, location = no");
 }
 
 function receiverJusoPopup() {
   opt = 1;
-  window.open("juso", "주소창", "width=508, height=453, location = no");
+  window.open("../../juso", "주소창", "width=508, height=453, location = no");
 }
 
 class App extends Component {
