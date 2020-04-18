@@ -5,6 +5,9 @@ import MailRow from "../../components/List/MailRow";
 import { Link } from "react-router-dom";
 
 class MailList extends Component {
+  mailButton = () => {
+    return this.props.history.push(this.props.match.params.address+'/addMail');
+  }
 
   renderRow() {
     return (
@@ -17,12 +20,10 @@ class MailList extends Component {
     const { Header, Row, HeaderCell, Body } = Table;
     return (
       <Layout>
-        <Link to="/mail/:address/addMail">
-          <Button icon labelPosition='left' basic color="purple" floated="left" style={{marginBottom: '10px'}}>
+          <Button icon labelPosition='left' onClick={this.mailButton} basic color="purple" floated="left" style={{marginBottom: '10px'}}>
             <Icon name='add' />
             택배 접수
           </Button>
-        </Link>
 
         <Table >
           <Header>

@@ -45,9 +45,7 @@ const DesktopContainer = ({ children, getWidth, state }) => (
     minWidth={Responsive.onlyTablet.minWidth}
   >
     <Layout>
-      <Link to="/mail/:address">
-        <Button basic color='purple'>뒤로 가기(임시)</Button>
-      </Link>
+        <Button basic onClick={window.testB} color='purple'>뒤로 가기(임시)</Button>
 
 
       <Table singleLine>
@@ -501,6 +499,10 @@ Homepage.getInitialProps = async ({ req }) => {
   };
 };
 
+function click() {
+  console.log();
+}
+
 function senderJusoPopup() {
   opt = 0;
   window.open("../../juso", "주소창", "width=508, height=453, location = no");
@@ -536,8 +538,13 @@ class App extends Component {
     }
   };
 
+  testB = () => {
+    this.props.history.goBack();
+  };
+
   render() {
     window.testF = this.testF;
+    window.testB = this.testB;
     return <Homepage state={this.state} />;
   }
 }
