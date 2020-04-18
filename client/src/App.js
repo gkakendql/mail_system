@@ -7,6 +7,7 @@ import addMail from './pages/addMail';
 import juso from './pages/juso';
 import mailList from './pages/mail/mailList';
 import list from './containers/PostContainer/PostContainer';
+import mailInform from './pages/MailInform';
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route path="/signUp" component={signUp}/>
           <Route path="/list" component={list}/>
           <Route path="/juso" component={juso}/>
+          <Route path="/mailInform" component={mailInform}/>
           <Route exact path="/mail/:address" component={mailList}/>
           <Route exact path="/mail/:address/addMail" component={addMail}/>
         </div>
