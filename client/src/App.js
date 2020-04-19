@@ -7,7 +7,11 @@ import addMail from './pages/addMail';
 import juso from './pages/juso';
 import mailList from './pages/mail/mailList';
 import list from './containers/PostContainer/PostContainer';
+<<<<<<< HEAD
 import qr from './components/qrCode';
+=======
+import mailInform from './pages/MailInform';
+>>>>>>> 5824177072a83061ff3de3ec35a394a9429b2715
 
 class App extends Component {
   render() {
@@ -17,6 +21,7 @@ class App extends Component {
           <Route path="/signUp" component={signUp}/>
           <Route path="/list" component={list}/>
           <Route path="/juso" component={juso}/>
+          <Route path="/mailInform" component={mailInform}/>
           <Route exact path="/mail/:address" component={mailList}/>
           <Route exact path="/mail/:address/addMail" component={addMail}/>
         </div>
