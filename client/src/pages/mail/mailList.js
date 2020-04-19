@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 class mailList extends Component {
   mailButton = () => {
-    return this.props.history.push(this.props.match.params.address+'/addMail');
+    return this.props.history.push(window.location.pathname+'/addMail');
   }
 
   renderRow() {
