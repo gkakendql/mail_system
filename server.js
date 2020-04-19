@@ -1,6 +1,6 @@
 const web3 = require("./ethereum/test");
 const factory = require("./ethereum/factory");
-const mail = require("./ethereum/mail");
+const Mail = require('./ethereum/build/Mail.json');
 
 const fs = require('fs');
 const express = require('express');
@@ -54,18 +54,36 @@ app.post('/api/address', async (req,res)=>{
   }
 });
 
-app.post('/api/addmail', async (req,res)=>{
+app.post('/api/addmail', upload.single('image'), async (req,res)=>{
   try {
     const accounts = await web3.eth.getAccounts();
-    console.log(accounts);
-    const test = await mail.methods.createMail();
-    const address = await test.call();
-    console.log(address);
-    await test.send({
+    const mail = new web3.eth.Contract(JSON.parse(Mail.interface),req.body.address);
+    await mail.methods.addSenderInfo(
+      req.body.sender_name,
+      req.body.sender_p1+req.body.sender_p2+req.body.sender_p3,
+      req.body.sender_email,
+      req.body.Spost+"+"+req.body.Saddr1+"+"+req.body.Saddr2
+    ).send({
       from: accounts[0],
       gas:1500000
     });
-    res.send(address);
+    await mail.methods.addReceiverInfo(
+      req.body.receiver_name,
+      req.body.receiver_p1+req.body.receiver_p2+req.body.receiver_p3,
+      req.body.Rpost+"+"+req.body.Raddr1+"+"+req.body.Raddr2
+    ).send({
+      from: accounts[0],
+      gas:1500000
+    });
+    await mail.methods.addMailInfo(
+      req.body.product_name,
+      req.body.quantity,
+      req.body.volume,
+      req.body.password
+    ).send({
+      from: accounts[0],
+      gas:1500000
+    });
   } catch (err) {
     console.log(err.message);
   }
