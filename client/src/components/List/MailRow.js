@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'semantic-ui-react';
-
+import { Link } from "react-router-dom";
 
   function qrPopup() {
-    window.open("/qrCode/app", "QR코드", "width=508, height=453, location = no");
+    window.open("/qrCode", "QR코드", "width=508, height=453, location = no");
   }
 
 class MailRow extends Component {
+  mailButton = () => {
+    return this.props.history.push(this.props.match.params.address+'/mailForm');
+  }
+
   render() {
     const { Row, Cell } = Table;
 
@@ -20,6 +24,11 @@ class MailRow extends Component {
         <Cell>
           <Button color="green" basic onClick={qrPopup}>
             클릭
+          </Button>
+        </Cell>
+        <Cell>
+          <Button color="green" basic onClick={this.mailButton}>
+            상세 정보
           </Button>
         </Cell>
       </Row>

@@ -112,7 +112,7 @@ class App extends Component {
 
     return (
       <Layout>
-          <Button basic onClick={window.testB} color='purple'>뒤로 가기(임시)</Button>
+          <Button basic color='purple'>뒤로 가기(임시)</Button>
 
 
         <Table singleLine>

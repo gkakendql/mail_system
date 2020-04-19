@@ -4,7 +4,7 @@ import Layout from "../../components/Layout";
 import MailRow from "../../components/List/MailRow";
 import { Link } from "react-router-dom";
 
-class MailList extends Component {
+class mailList extends Component {
   mailButton = () => {
     return this.props.history.push(this.props.match.params.address+'/addMail');
   }
@@ -34,6 +34,7 @@ class MailList extends Component {
               <HeaderCell style={{minWidth: "6em"}}>상품명</HeaderCell>
               <HeaderCell style={{minWidth: "6em"}}>배송 상태</HeaderCell>
               <HeaderCell style={{minWidth: "7em"}}>QR코드</HeaderCell>
+              <HeaderCell style={{minWidth: "7em"}}>상세 정보</HeaderCell>
             </Row>
           </Header>
           {this.renderRow()}
@@ -46,4 +47,4 @@ class MailList extends Component {
   }
 }
 
-export default MailList;
+export default mailList;

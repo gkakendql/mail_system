@@ -12,7 +12,7 @@ import {
   Input
 } from "semantic-ui-react";
 
-class MailInform extends Component {
+class mailInform extends Component {
   render() {
     return (
       <Layout>
@@ -104,4 +104,4 @@ class MailInform extends Component {
   }
 }
 
-export default MailInform;
+export default mailInform;
