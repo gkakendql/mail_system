@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'semantic-ui-react';
 
+
+  function qrPopup() {
+    window.open("/qrCode/app", "QR코드", "width=508, height=453, location = no");
+  }
+
 class MailRow extends Component {
   render() {
     const { Row, Cell } = Table;
@@ -13,7 +18,7 @@ class MailRow extends Component {
         <Cell>아이패드</Cell>
         <Cell>배송중</Cell>
         <Cell>
-          <Button color="green" basic>
+          <Button color="green" basic onClick={qrPopup}>
             클릭
           </Button>
         </Cell>

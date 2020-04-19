@@ -1,5 +1,6 @@
 const web3 = require("./ethereum/test");
 const factory = require("./ethereum/factory");
+const mail = require("./ethereum/mail");
 
 const fs = require('fs');
 const express = require('express');
@@ -41,6 +42,23 @@ app.post('/api/address', async (req,res)=>{
     const accounts = await web3.eth.getAccounts();
     console.log(accounts);
     const test = await factory.methods.createMail();
+    const address = await test.call();
+    console.log(address);
+    await test.send({
+      from: accounts[0],
+      gas:1500000
+    });
+    res.send(address);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
+app.post('/api/addmail', async (req,res)=>{
+  try {
+    const accounts = await web3.eth.getAccounts();
+    console.log(accounts);
+    const test = await mail.methods.createMail();
     const address = await test.call();
     console.log(address);
     await test.send({
