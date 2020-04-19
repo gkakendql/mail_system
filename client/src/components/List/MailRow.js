@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
   }
 
 class MailRow extends Component {
-  mailButton = () => {
-    return this.props.history.push(this.props.match.params.address+'/mailForm');
+  mailLink = () => {
+  return (window.location.pathname + "/mailInform");
   }
 
   render() {
@@ -27,9 +27,11 @@ class MailRow extends Component {
           </Button>
         </Cell>
         <Cell>
-          <Button color="green" basic onClick={this.mailButton}>
-            상세 정보
-          </Button>
+          <Link to={this.mailLink}>
+            <Button color="green" basic onClick={this.mailButton}>
+              상세 정보
+            </Button>
+        </Link>
         </Cell>
       </Row>
     );
