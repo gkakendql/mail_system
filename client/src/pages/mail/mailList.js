@@ -11,7 +11,10 @@ class mailList extends Component {
 
   renderRow() {
     return (
-      <MailRow/>
+      <MailRow
+
+        //key={index} 같이 값 넣기
+      />
     );
   }
 
@@ -37,10 +40,7 @@ class mailList extends Component {
               <HeaderCell style={{minWidth: "7em"}}>상세 정보</HeaderCell>
             </Row>
           </Header>
-          {this.renderRow()}
-          {this.renderRow()}
-          {this.renderRow()}
-          {this.renderRow()}
+          <Body>{this.renderRow()}</Body>
         </Table>
       </Layout>
     );

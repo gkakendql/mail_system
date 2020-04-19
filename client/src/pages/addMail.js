@@ -108,11 +108,19 @@ class App extends Component {
     this.props.history.goBack();
   };
 
+  backLink = () => {
+    let url = window.location.pathname;
+    let backUrl = url.replace("/addMail", "");
+    return (backUrl);
+  }
+
   render() {
 
     return (
       <Layout>
+        <Link to={this.backLink}>
           <Button basic color='purple'>뒤로 가기(임시)</Button>
+        </Link>
 
 
         <Table singleLine>

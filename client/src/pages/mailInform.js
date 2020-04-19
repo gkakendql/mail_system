@@ -9,13 +9,19 @@ import {
   Header,
   Message,
   Segment,
-  Input
+  Input,
+  Container
 } from "semantic-ui-react";
 
 class mailInform extends Component {
+
+  exit = () => {
+    window.close();
+  }
+
   render() {
     return (
-      <Layout>
+      <Container style={{width:"800px", padding:40}}>
         <Table basic style={{ width: "500px" }}>
           <Table.Header>
             <Table.Row>
@@ -99,7 +105,11 @@ class mailInform extends Component {
             </Table.Row>
           </Table.Body>
         </Table>
-      </Layout>
+
+        <Button color="red" basic onClick={this.exit}>
+          닫기
+        </Button>
+      </Container>
     );
   }
 }

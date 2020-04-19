@@ -7,12 +7,9 @@ import addMail from './pages/addMail';
 import juso from './pages/juso';
 import mailList from './pages/mail/mailList';
 import list from './containers/PostContainer/PostContainer';
-<<<<<<< HEAD
-import mailInform from './pages/MailInform';
-=======
-import qr from './components/qrCode';
 import mailInform from './pages/mailInform';
->>>>>>> 6cb6a84a425a319290fbaba48f854bfa22caadda
+import qr from './components/qrCode';
+
 
 class App extends Component {
   render() {

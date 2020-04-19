@@ -19,7 +19,8 @@ class signUp extends Component {
       p1: "",
       p2: "",
       p3: "",
-      email: ""
+      email: "",
+      check_id: ""
     };
   }
 
@@ -48,6 +49,7 @@ class signUp extends Component {
         //console.log(response.data);
       });
       alert("가입 완료");
+      return this.props.history.push('/');
     }
 
     this.setState({
@@ -89,6 +91,44 @@ class signUp extends Component {
     return post(url, formData, config);
   };
 
+  ////아이디 중복 확인
+  state = {
+    users: ""
+  };
+
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({ users: res }))
+      .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    const response = await fetch("/api/users");
+    const body = await response.json();
+    return body;
+  };
+
+  idCheck = () => {
+    const length = this.state.users.length;
+    console.log(this.state.id);
+
+    let login_state = 0;
+    var i = 0;
+    var check = 0;
+    for (i; i < length; i++) {
+      if (this.state.users[i].id === this.state.id) {
+        console.log("중복된 아이디 입니다.");
+        alert("중복된 아이디 입니다.");
+        check = 1;
+        break;
+        }
+      }
+      if(check ===0)
+        alert("사용 가능한 아이디 입니다.");
+  }
+
+  ////
+
   render() {
     return (
       <Layout>
@@ -102,20 +142,32 @@ class signUp extends Component {
             <Table.Row>
               <Table.Cell>
                 <Form
-                  onSubmit={this.handleFormSubmit}
                   error={this.state.errorMessage}
                 >
-                  <Form.Field inline>
-                    <label style={{ minWidth: "6em" }}>아이디</label>
-                    <Input
-                      icon="user"
-                      iconPosition="left"
-                      name="id"
-                      style={{ minWidth: "30em" }}
-                      value={this.state.id}
-                      onChange={this.handleValueChange}
-                    />
-                  </Form.Field>
+                  <Form.Group inline>
+                    <Form.Field>
+                      <label style={{ minWidth: "6em" }}>아이디</label>
+                      <Input
+                        icon="user"
+                        iconPosition="left"
+                        name="id"
+                        style={{ minWidth: "30em" }}
+                        value={this.state.id}
+                        onChange={this.handleValueChange}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <Button
+                        type="submit"
+                        basic
+                        color="violet"
+                        onClick={this.idCheck}
+                      >
+                        중복 확인
+                      </Button>
+
+                    </Form.Field>
+                  </Form.Group>
                   <Form.Field inline>
                     <label style={{ minWidth: "6em" }}>비밀번호</label>
                     <Input
@@ -188,6 +240,7 @@ class signUp extends Component {
                       type="submit"
                       basic
                       color="violet"
+                      onClick={this.handleFormSubmit}
                     >
                       가입 완료
                     </Button>
