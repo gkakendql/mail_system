@@ -6,30 +6,43 @@ import { Link } from "react-router-dom";
 import { post } from "axios";
 
 class mailList extends Component {
+
+  static async getInitialProps(props) {
+    const url = "/api/getmail";
+    const formData = new FormData();
+    formData.append("address", this.props.match.params.address);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    };
+    let response = await post(url,formData,config);
+
+    let sender_name = response.data.senderInfos[0];
+    let sender_address = response.data.senderInfos[3];
+    let sender_phone = response.data.senderInfos[1];
+    let product_name = response.data.mailInfos[0];
+    let status = response.data.mailInfos[6];
+
+return { sender_name, sender_address, sender_phone, product_name, status };
+  }
+
+
   mailButton = () => {
     return this.props.history.push(window.location.pathname+'/addMail');
   }
 
-  getMail = async () => {
-      const url = "/api/getmail";
-      const formData = new FormData();
-      formData.append("address", this.props.match.params.address);
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data"
-        }
-      };
-      let response = await post(url,formData,config);
-      console.log(response.data);
-    };
+
 
   renderRow() {
-    return (
-      <MailRow
-
-        //key={index} 같이 값 넣기
-      />
-    );
+    console.log(this.props.sender_name);
+    console.log(this.props.sender_address);
+    return <MailRow
+      sender_name = {this.props.sender_name}
+      sender_address = {this.props.sender_address}
+      sender_phone = {this.props.sender_phone}
+      product_name = {this.props.product_name}
+      status = {this.props.status} />;
   }
 
 
