@@ -25,12 +25,6 @@ class Login extends Component {
     };
   }
 
-  componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ users: res }))
-      .catch(err => console.log(err));
-  }
-
   callApi = async () => {
     const response = await fetch("/api/users");
     const body = await response.json();
@@ -51,6 +45,10 @@ class Login extends Component {
     let nextState = {};
     nextState[e.target.name] = e.target.value;
     this.setState(nextState);
+
+    this.callApi()
+      .then(res => this.setState({ users: res }))
+      .catch(err => console.log(err));
   };
 
   loginCheck = () => {
