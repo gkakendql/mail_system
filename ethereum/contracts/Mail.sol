@@ -87,4 +87,16 @@ contract Mail{
         require(mailInfo.password == keccak256(password));
         mailInfo.complete = true;
     }
+
+    function senderLength() public view returns (uint) {
+        return senderInfos.length;
+    }
+
+    function receiverLength() public view returns (uint) {
+        return receiverInfos.length;
+    }
+
+    function mailLength() public view returns (uint) {
+        return mailInfos.length;
+    }
 }
