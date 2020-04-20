@@ -11,22 +11,17 @@ class mailList extends Component {
   }
 
   getMail = async () => {
-    const url = "/api/getmail";
-    const formData = new FormData();
-    formData.append("address", this.props.match.params.address);
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data"
-      }
+      const url = "/api/getmail";
+      const formData = new FormData();
+      formData.append("address", this.props.match.params.address);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      };
+      let response = await post(url,formData,config);
+      console.log(response.data);
     };
-<<<<<<< HEAD
-    let data = post(url,formData,config);
-    console.log(data.mailInfos);
-=======
-    let response = await post(url,formData,config);
-    console.log(response.data);
->>>>>>> ab050316b77dd91ba6dcd11beedce082d699d6dc
-  };
 
   renderRow() {
     return (

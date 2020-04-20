@@ -48,7 +48,7 @@ app.post('/api/getmail',upload.single('image'),  async (req, res) => {
     senderInfos: senderInfos,
     receiverInfos: receiverInfos,
     mailInfos: mailInfos
-  }) 
+  })
 });
 
 app.use('/image', express.static('./upload'));
