@@ -10,7 +10,7 @@ class mailList extends Component {
     return this.props.history.push(window.location.pathname+'/addMail');
   }
 
-  getMail = () => {
+  getMail = async () => {
     const url = "/api/getmail";
     const formData = new FormData();
     formData.append("address", this.props.match.params.address);
@@ -19,8 +19,13 @@ class mailList extends Component {
         "content-type": "multipart/form-data"
       }
     };
+<<<<<<< HEAD
     let data = post(url,formData,config);
     console.log(data.mailInfos);
+=======
+    let response = await post(url,formData,config);
+    console.log(response.data);
+>>>>>>> ab050316b77dd91ba6dcd11beedce082d699d6dc
   };
 
   renderRow() {
