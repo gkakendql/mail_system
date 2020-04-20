@@ -85,6 +85,18 @@ class App extends Component {
   };
 
   addmail = () => {
+    const url = "/api/getmail";
+    const formData = new FormData();
+    formData.append("address", this.props.match.params.address);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    };
+    return post(url,formData,config);
+  };
+
+  adddmail = () => {
     const url = "/api/addmail";
     const formData = new FormData();
     formData.append("sender_name", this.state.sender_name);
