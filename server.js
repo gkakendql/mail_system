@@ -77,8 +77,10 @@ app.post('/api/addmail', upload.single('image'), async (req,res)=>{
     });
     await mail.methods.addMailInfo(
       req.body.product_name,
+      req.body.product_price,
       req.body.quantity,
       req.body.volume,
+      req.body.others,
       req.body.password
     ).send({
       from: accounts[0],
