@@ -1,6 +1,7 @@
 const web3 = require("./ethereum/test");
-const factory = require("./ethereum/factory");
 const Mail = require('./ethereum/build/Mail.json');
+const factory = require("./ethereum/factory");
+
 
 const fs = require('fs');
 const express = require('express');
@@ -37,12 +38,17 @@ app.get('/api/users', (req, res) => {
 
 app.post('/api/getmail',upload.single('image'),  async (req, res) => {
   const mail = new web3.eth.Contract(JSON.parse(Mail.interface),req.body.address);
-  const senderInfos = await mail.methods.senderInfos(1).call();
-  const receiverInfos = await mail.methods.receiverInfos(1).call();
-  const mailInfos = await mail.methods.mailInfos(1).call();
+  const senderInfos = await mail.methods.senderInfos(0).call();
+  const receiverInfos = await mail.methods.receiverInfos(0).call();
+  const mailInfos = await mail.methods.mailInfos(0).call();
   console.log(senderInfos);
   console.log(receiverInfos);
   console.log(mailInfos);
+  return {
+    senderInfos: senderInfos,
+    receiverInfos: receiverInfos,
+    mailInfos: mailInfos
+  };
 });
 
 app.use('/image', express.static('./upload'));

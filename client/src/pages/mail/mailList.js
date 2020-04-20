@@ -3,11 +3,25 @@ import { Button, Table, Icon } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import MailRow from "../../components/List/MailRow";
 import { Link } from "react-router-dom";
+import { post } from "axios";
 
 class mailList extends Component {
   mailButton = () => {
     return this.props.history.push(window.location.pathname+'/addMail');
   }
+
+  getMail = () => {
+    const url = "/api/getmail";
+    const formData = new FormData();
+    formData.append("address", this.props.match.params.address);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    };
+    let data = post(url,formData,config);
+    console.log(data);
+  };
 
   renderRow() {
     return (
@@ -26,6 +40,11 @@ class mailList extends Component {
           <Button icon labelPosition='left' onClick={this.mailButton} basic color="purple" floated="left" style={{marginBottom: '10px'}}>
             <Icon name='add' />
             택배 접수
+          </Button>
+
+          <Button onClick={this.getMail} basic color="purple" >
+            <Icon name='add' />
+            확인
           </Button>
 
         <Table >
