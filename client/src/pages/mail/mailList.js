@@ -20,7 +20,7 @@ class mailList extends Component {
       }
     };
     let data = post(url,formData,config);
-    console.log(data);
+    console.log(data.mailInfos);
   };
 
   renderRow() {
