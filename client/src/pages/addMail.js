@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Layout from "../components/Layout";
 import { post } from "axios";
-import { Input, Form, Button, Table, Dropdown } from "semantic-ui-react";
+import { Input, Form, Button, Table, Dropdown, Message} from "semantic-ui-react";
 
 let opt;
 
@@ -53,8 +53,20 @@ class App extends Component {
       Saddr2: "",
       Rpost: "",
       Raddr1: "",
-      Raddr2: ""
+      Raddr2: "",
+      errorMessage: "",
+      loading: false,
+      success: false
     };
+  }
+
+  start = () => {
+    setTimeout(this.print,45000);
+  }
+
+  print = () => {
+    alert("접수 되었습니다.");
+    return this.props.history.push(window.location.pathname.replace("/addMail",""));
   }
 
   senderJusoPopup = () => {
@@ -70,7 +82,8 @@ class App extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
     console.log(this.state);
-
+    this.start();
+    this.addmail();
     //window.location.reload();
   };
 
@@ -84,7 +97,7 @@ class App extends Component {
     this.setState({ [id]: value });
   };
 
-  addmail = () => {
+  getmail = () => {
     const url = "/api/getmail";
     const formData = new FormData();
     formData.append("address", this.props.match.params.address);
@@ -96,40 +109,48 @@ class App extends Component {
     return post(url,formData,config);
   };
 
-  adddmail = () => {
-    const url = "/api/addmail";
-    const formData = new FormData();
-    formData.append("sender_name", this.state.sender_name);
-    formData.append("sender_p1", this.state.sender_p1);
-    formData.append("sender_p2", this.state.sender_p2);
-    formData.append("sender_p3", this.state.sender_p3);
-    formData.append("sender_email", this.state.sender_email);
-    formData.append("Spost", this.state.Spost);
-    formData.append("Saddr1", this.state.Saddr1);
-    formData.append("Saddr2", this.state.Saddr2);
 
-    formData.append("receiver_name", this.state.receiver_name);
-    formData.append("receiver_p1", this.state.receiver_p1);
-    formData.append("receiver_p2", this.state.receiver_p2);
-    formData.append("receiver_p3", this.state.receiver_p3);
-    formData.append("Rpost", this.state.Rpost);
-    formData.append("Raddr1", this.state.Raddr1);
-    formData.append("Raddr2", this.state.Raddr2);
 
-    formData.append("product_name", this.state.product_name);
-    formData.append("product_price", this.state.product_price);
-    formData.append("quantity", this.state.quantity);
-    formData.append("volume", this.state.volume);
-    formData.append("others", this.state.others);
-    formData.append("password", this.state.password);
 
-    formData.append("address", this.props.match.params.address);
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data"
-      }
-    };
-    return post(url, formData, config);
+  addmail = async () => {
+    this.setState({ loading: true });
+      const url = "/api/addmail";
+      const formData = new FormData();
+      formData.append("sender_name", this.state.sender_name);
+      formData.append("sender_p1", this.state.sender_p1);
+      formData.append("sender_p2", this.state.sender_p2);
+      formData.append("sender_p3", this.state.sender_p3);
+      formData.append("sender_email", this.state.sender_email);
+      formData.append("Spost", this.state.Spost);
+      formData.append("Saddr1", this.state.Saddr1);
+      formData.append("Saddr2", this.state.Saddr2);
+
+      formData.append("receiver_name", this.state.receiver_name);
+      formData.append("receiver_p1", this.state.receiver_p1);
+      formData.append("receiver_p2", this.state.receiver_p2);
+      formData.append("receiver_p3", this.state.receiver_p3);
+      formData.append("Rpost", this.state.Rpost);
+      formData.append("Rasddr1", this.state.Raddr1);
+      formData.append("Raddr2", this.state.Raddr2);
+
+      formData.append("product_name", this.state.product_name);
+      formData.append("product_price", this.state.product_price);
+      formData.append("quantity", this.state.quantity);
+      formData.append("volume", this.state.volume);
+      formData.append("others", this.state.others);
+      formData.append("password", this.state.password);
+
+      formData.append("address", this.props.match.params.address);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      };
+      await post(url, formData, config);
+
+
+
+
   };
 
   testF = data => {
@@ -171,7 +192,7 @@ class App extends Component {
           <Table.Body>
             <Table.Row>
               <Table.Cell>
-                <Form>
+                <Form error={this.state.errorMessage}>
                   <Form.Field inline>
                     <label style={{ minWidth: "6em" }}>이름</label>
                     <Input
@@ -431,9 +452,22 @@ class App extends Component {
               </Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Button onClick={this.addmail} attached="bottom">
-                접수 완료
+              <Button onClick={this.handleFormSubmit} attached="bottom"
+                loading={this.state.loading}
+                type="submit"
+                basic
+                color="violet">
+                접수
               </Button>
+
+              <Button onClick={this.getmail} attached="bottom">
+                꺼내기
+              </Button>
+              <Message
+                error
+                header="Oops!"
+                content={this.state.errorMessage}
+              />
             </Table.Row>
           </Table.Body>
         </Table>

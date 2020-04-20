@@ -37,8 +37,12 @@ app.get('/api/users', (req, res) => {
 
 app.post('/api/getmail',upload.single('image'),  async (req, res) => {
   const mail = new web3.eth.Contract(JSON.parse(Mail.interface),req.body.address);
-  const data = await mail.methods.senderInfos(0).call();
-  console.log(data);
+  const senderInfos = await mail.methods.senderInfos(1).call();
+  const receiverInfos = await mail.methods.receiverInfos(1).call();
+  const mailInfos = await mail.methods.mailInfos(1).call();
+  console.log(senderInfos);
+  console.log(receiverInfos);
+  console.log(mailInfos);
 });
 
 app.use('/image', express.static('./upload'));
