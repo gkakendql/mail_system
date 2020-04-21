@@ -14,7 +14,11 @@ class mailList extends Component {
     };
   }
   async componentWillMount(props) {
+<<<<<<< HEAD
     //console.log(this);
+=======
+    console.log(this);
+>>>>>>> 8e6ce78ff8a0b25b3035999d02f64a53a873fc71
     const url = "/api/getmail";
     const formData = new FormData();
     formData.append("address", this.props.match.params.address);
@@ -24,7 +28,11 @@ class mailList extends Component {
       }
     };
     let response = await post(url, formData, config);
+<<<<<<< HEAD
     //console.log(response);
+=======
+    console.log(response);
+>>>>>>> 8e6ce78ff8a0b25b3035999d02f64a53a873fc71
 
     let sender_name = response.data.senderInfos[0];
     let sender_phone = response.data.senderInfos[1];
@@ -40,6 +48,7 @@ class mailList extends Component {
     let others = response.data.mailInfos[4];
     let status = response.data.mailInfos[6];
 
+<<<<<<< HEAD
     if(response.data.mailInfos[6] === false) {
       status = "배송중";
     }
@@ -47,10 +56,13 @@ class mailList extends Component {
       status="배송 완료";
     }
 
+=======
+>>>>>>> 8e6ce78ff8a0b25b3035999d02f64a53a873fc71
     this.testdata = {
       sender_name,
       sender_address,
       sender_phone,
+<<<<<<< HEAD
       sender_email,
       receiver_name,
       receiver_phone,
@@ -60,6 +72,9 @@ class mailList extends Component {
       quantity,
       volume,
       others,
+=======
+      product_name,
+>>>>>>> 8e6ce78ff8a0b25b3035999d02f64a53a873fc71
       status
     };
     this.setState({
@@ -72,6 +87,7 @@ class mailList extends Component {
   };
 
   renderRow() {
+<<<<<<< HEAD
     console.log(this.testdata.sender_name);
     return (
       <MailRow
@@ -88,6 +104,17 @@ class mailList extends Component {
         volume = {this.testdata.volume}
         others = {this.testdata.others}
         status = {this.testdata.status}
+=======
+    console.log(this.testdata);
+    console.log(this.props.sender_address);
+    return (
+      <MailRow
+        sender_name={this.props.sender_name}
+        sender_address={this.props.sender_address}
+        sender_phone={this.props.sender_phone}
+        product_name={this.props.product_name}
+        status={this.props.status}
+>>>>>>> 8e6ce78ff8a0b25b3035999d02f64a53a873fc71
       />
     );
   }
@@ -114,6 +141,14 @@ class mailList extends Component {
           <Icon name="add" />
           택배 접수
         </Button>
+<<<<<<< HEAD
+=======
+
+        <Button onClick={this.getMail} basic color="purple">
+          <Icon name="add" />
+          확인
+        </Button>
+>>>>>>> 8e6ce78ff8a0b25b3035999d02f64a53a873fc71
 
         <Table>
           <Header>
