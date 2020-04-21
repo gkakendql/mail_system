@@ -38,17 +38,38 @@ app.get('/api/users', (req, res) => {
 
 app.post('/api/getmail',upload.single('image'),  async (req, res) => {
   const mail = new web3.eth.Contract(JSON.parse(Mail.interface),req.body.address);
-  const senderInfos = await mail.methods.senderInfos(0).call();
-  const receiverInfos = await mail.methods.receiverInfos(0).call();
-  const mailInfos = await mail.methods.mailInfos(0).call();
-  console.log(senderInfos);
-  console.log(receiverInfos);
-  console.log(mailInfos);
-  res.send({
-    senderInfos: senderInfos,
-    receiverInfos: receiverInfos,
-    mailInfos: mailInfos
-  })
+  const senderLength= await mail.methods.senderLength().call();
+  const receiverLength = await mail.methods.receiverLength().call();
+  console.log(senderLength);
+
+  if(senderLength == 0) {
+      console.log("현재 데이터 0");
+    res.send({
+      senderLength: senderLength
+    });
+  }
+
+  else{
+    console.log("현재 데이터"+senderLength+"개");
+    let datas= [];
+    for (var i =0;i<senderLength;i++)
+    {
+      const senderInfo = await mail.methods.senderInfos(i).call();
+      const receiverInfo = await mail.methods.receiverInfos(i).call();
+      const mailInfo = await mail.methods.mailInfos(i).call();
+
+      var newObj = Object.assign({}, senderInfo, receiverInfo, mailInfo)
+      datas.push(newObj);
+    }
+
+    console.log(datas);
+
+    res.send({
+      datas: datas,
+      length: senderLength
+    });
+  }
+
 });
 
 app.use('/image', express.static('./upload'));
