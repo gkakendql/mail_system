@@ -130,7 +130,7 @@ class App extends Component {
       formData.append("receiver_p2", this.state.receiver_p2);
       formData.append("receiver_p3", this.state.receiver_p3);
       formData.append("Rpost", this.state.Rpost);
-      formData.append("Rasddr1", this.state.Raddr1);
+      formData.append("Raddr1", this.state.Raddr1);
       formData.append("Raddr2", this.state.Raddr2);
 
       formData.append("product_name", this.state.product_name);
@@ -154,19 +154,16 @@ class App extends Component {
   };
 
   testF = data => {
-    console.log(this);
     if (opt === 0) {
       this.setState({
         Spost: data.zonecode,
         Saddr1: data.address
       });
-      console.log(this.state);
     } else {
       this.setState({
         Rpost: data.zonecode,
         Raddr1: data.address
       });
-      console.log(this.state);
     }
   };
 
