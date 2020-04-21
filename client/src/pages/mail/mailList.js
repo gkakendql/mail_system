@@ -26,44 +26,7 @@ class mailList extends Component {
     let response = await post(url, formData, config);
     console.log(response.data);
     if(response.data.senderLength != 0 ){
-    /*  let sender_name = response.data.senderInfos[0].senderName;
-      let sender_phone = response.data.senderInfos[0].senderPhone;
-      let sender_email = response.data.senderInfos[0].senderEmail;
-      let sender_address = response.data.senderInfos[0].senderAddress;
-      let receiver_name = response.data.receiverInfos[0].receiverName;
-      let receiver_phone = response.data.receiverInfos[0].receiverPhone;
-      let receiver_address = response.data.receiverInfos[0].receiverAddress;
-      let product_name = response.data.mailInfos[0].mailName;
-      let product_price = response.data.mailInfos[0].price;
-      let quantity = response.data.mailInfos[0].mailQuantity;
-      let volume = response.data.mailInfos[0].weight;
-      let others = response.data.mailInfos[0].other;
-      let status = response.data.mailInfos[0].complete;
-      let length = response.data.senderLength;
-
-      if(status === false) {
-        status = "배송중";
-      }
-      else {
-        status="배송 완료";
-      }
-
-      this.testdata = {
-        sender_name,
-        sender_address,
-        sender_phone,
-        sender_email,
-        receiver_name,
-        receiver_phone,
-        receiver_address,
-        product_name,
-        product_price,
-        quantity,
-        volume,
-        others,
-        status,
-        length
-      };*/
+    
         let data= response.data.datas;
         let length = response.data.length;
 
