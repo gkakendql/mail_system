@@ -1,64 +1,58 @@
 const web3 = require("./ethereum/test");
-const Mail = require('./ethereum/build/Mail.json');
+const Mail = require("./ethereum/build/Mail.json");
 const factory = require("./ethereum/factory");
 
-
-const fs = require('fs');
-const express = require('express');
-const bodyParser = require('body-parser');
+const fs = require("fs");
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const data = fs.readFileSync('./database.json');
+const data = fs.readFileSync("./database.json");
 const conf = JSON.parse(data);
-const mysql = require('mysql');
+const mysql = require("mysql");
 
 const connection = mysql.createConnection({
-    host: conf.host,
-    user: conf.user,
-    password: conf.password,
-    port: conf.port,
-    database: conf.database
+  host: conf.host,
+  user: conf.user,
+  password: conf.password,
+  port: conf.port,
+  database: conf.database
 });
 connection.connect();
 
-const multer = require('multer');
-const upload = multer({dest: './upload'});
+const multer = require("multer");
+const upload = multer({ dest: "./upload" });
 
-app.get('/api/users', (req, res) => {
-    connection.query(
-        'SELECT * FROM USER',
-        (err, rows, fields) => {
-            res.send(rows);
-        }
-    )
+app.get("/api/users", (req, res) => {
+  connection.query("SELECT * FROM USER", (err, rows, fields) => {
+    res.send(rows);
+  });
 });
 
-app.post('/api/getmail',upload.single('image'),  async (req, res) => {
-  const mail = new web3.eth.Contract(JSON.parse(Mail.interface),req.body.address);
-  const senderLength= await mail.methods.senderLength().call();
-  const receiverLength = await mail.methods.receiverLength().call();
+app.post("/api/getmail", upload.single("image"), async (req, res) => {
+  const mail = new web3.eth.Contract(
+    JSON.parse(Mail.interface),
+    req.body.address
+  );
+  const senderLength = await mail.methods.senderLength().call();
   console.log(senderLength);
 
-  if(senderLength == 0) {
-      console.log("현재 데이터 0");
+  if (senderLength == 0) {
+    console.log("현재 데이터 0");
     res.send({
       senderLength: senderLength
     });
-  }
-
-  else{
-    console.log("현재 데이터"+senderLength+"개");
-    let datas= [];
-    for (var i =0;i<senderLength;i++)
-    {
+  } else {
+    console.log("현재 데이터" + senderLength + "개");
+    let datas = [];
+    for (var i = 0; i < senderLength; i++) {
       const senderInfo = await mail.methods.senderInfos(i).call();
-      const receiverInfo = await mail.methods.receiverInfos(i).call();
       const mailInfo = await mail.methods.mailInfos(i).call();
 
-      var newObj = Object.assign({}, senderInfo, receiverInfo, mailInfo)
+      var newObj = Object.assign({}, senderInfo, mailInfo);
       datas.push(newObj);
     }
 
@@ -69,12 +63,11 @@ app.post('/api/getmail',upload.single('image'),  async (req, res) => {
       length: senderLength
     });
   }
-
 });
 
-app.use('/image', express.static('./upload'));
+app.use("/image", express.static("./upload"));
 
-app.post('/api/address', async (req,res)=>{
+app.post("/api/address", async (req, res) => {
   try {
     const accounts = await web3.eth.getAccounts();
     console.log(accounts);
@@ -83,7 +76,7 @@ app.post('/api/address', async (req,res)=>{
     console.log(address);
     await test.send({
       from: accounts[0],
-      gas:1500000
+      gas: 1500000
     });
     res.send(address);
   } catch (err) {
@@ -91,45 +84,52 @@ app.post('/api/address', async (req,res)=>{
   }
 });
 
-app.post('/api/addmail', upload.single('image'), async (req,res)=>{
+app.post("/api/addmail", upload.single("image"), async (req, res) => {
   try {
     const accounts = await web3.eth.getAccounts();
-    const mail = new web3.eth.Contract(JSON.parse(Mail.interface),req.body.address);
-    await mail.methods.addSenderInfo(
-      req.body.sender_name,
-      req.body.sender_p1+req.body.sender_p2+req.body.sender_p3,
-      req.body.sender_email,
-      req.body.Spost+"+"+req.body.Saddr1+"+"+req.body.Saddr2
-    ).send({
-      from: accounts[0],
-      gas:1500000
-    });
-    await mail.methods.addReceiverInfo(
-      req.body.receiver_name,
-      req.body.receiver_p1+req.body.receiver_p2+req.body.receiver_p3,
-      req.body.Rpost+"+"+req.body.Raddr1+"+"+req.body.Raddr2
-    ).send({
-      from: accounts[0],
-      gas:1500000
-    });
-    await mail.methods.addMailInfo(
-      req.body.product_name,
-      req.body.product_price,
-      req.body.quantity,
-      req.body.volume,
-      req.body.others,
-      req.body.password
-    ).send({
-      from: accounts[0],
-      gas:1500000
-    });
+    const mail = new web3.eth.Contract(
+      JSON.parse(Mail.interface),
+      req.body.address
+    );
+    console.log("11111111111111111111111");
+    await Promise.all([
+      mail.methods
+        .addSenderInfo(
+          req.body.sender_name,
+          req.body.sender_p1 + req.body.sender_p2 + req.body.sender_p3,
+          req.body.sender_email,
+          req.body.Spost + " " + req.body.Saddr1 + " " + req.body.Saddr2,
+          req.body.receiver_name,
+          req.body.receiver_p1 + req.body.receiver_p2 + req.body.receiver_p3,
+          req.body.Rpost + " " + req.body.Raddr1 + " " + req.body.Raddr2
+        )
+        .send({
+          from: accounts[0],
+          gas: 1500000
+        }),
+      mail.methods
+        .addMailInfo(
+          req.body.product_name,
+          req.body.product_price,
+          req.body.quantity,
+          req.body.volume,
+          req.body.others,
+          req.body.password
+        )
+        .send({
+          from: accounts[0],
+          gas: 1500000
+        })
+    ]);
+    console.log("222222222222");
+    res.send();
   } catch (err) {
     console.log(err.message);
   }
 });
 
-app.post('/api/users', upload.single('image'),(req,res) => {
-  let sql = 'INSERT INTO USER VALUES (?,?,?,?,?,?)';
+app.post("/api/users", upload.single("image"), (req, res) => {
+  let sql = "INSERT INTO USER VALUES (?,?,?,?,?,?)";
   let id = req.body.id;
   let pw = req.body.pw;
   let name = req.body.name;
@@ -141,16 +141,13 @@ app.post('/api/users', upload.single('image'),(req,res) => {
   console.log(id);
   console.log(pw);
   console.log(name);
-  console.log(p1+p2+p3);
+  console.log(p1 + p2 + p3);
   console.log(email);
   console.log(address);
-  let parms = [id,pw,name,p1+p2+p3,email,address];
-  connection.query(sql,parms,
-    (err, rows, fields) => {
-      res.send(rows);
-    });
+  let parms = [id, pw, name, p1 + p2 + p3, email, address];
+  connection.query(sql, parms, (err, rows, fields) => {
+    res.send(rows);
+  });
 });
-
-
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

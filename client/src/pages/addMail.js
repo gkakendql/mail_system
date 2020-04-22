@@ -60,10 +60,6 @@ class App extends Component {
     };
   }
 
-  start = () => {
-    setTimeout(this.print,45000);
-  }
-
   print = () => {
     alert("접수 되었습니다.");
     return this.props.history.push(window.location.pathname.replace("/addMail",""));
@@ -82,7 +78,6 @@ class App extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
     console.log(this.state);
-    this.start();
     this.addmail();
     //window.location.reload();
   };
@@ -147,6 +142,7 @@ class App extends Component {
         }
       };
       await post(url, formData, config);
+      this.testB();
 
 
 
@@ -387,6 +383,7 @@ class App extends Component {
                       <label style={{ minWidth: "6em" }}>상품가격</label>
                       <Input
                         id="product_price"
+                        type="number"
                         style={{ maxWidth: "15em" }}
                         value={this.state.product_price}
                         onChange={this.handleValueChange}
@@ -401,6 +398,7 @@ class App extends Component {
                       <label style={{ minWidth: "6em" }}>포장수량</label>
                       <Input
                         id="quantity"
+                        type="number"
                         style={{ maxWidth: "15em" }}
                         value={this.state.quantity}
                         onChange={this.handleValueChange}
