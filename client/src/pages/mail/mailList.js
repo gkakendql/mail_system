@@ -26,7 +26,7 @@ class mailList extends Component {
     let response = await post(url, formData, config);
     console.log(response.data);
     if(response.data.senderLength != 0 ){
-    
+
         let data= response.data.datas;
         let length = response.data.length;
 
@@ -54,10 +54,11 @@ class mailList extends Component {
   renderRow() {
     console.log(this.testdata);
     if(this.testdata.length != 0){
-      return this.testdata.data.map((data) => {
+      return this.testdata.data.map((data, index) => {
         return <MailRow
           data={data}
-          length={this.testdata.length}
+          key={index}
+          index={index}
           />;
         })
       }

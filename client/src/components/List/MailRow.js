@@ -11,17 +11,14 @@ class MailRow extends Component {
   mailLink = () => {
     window.open(window.location.pathname + "/mailInform", "QR코드", "width=770, height=800, location = no");
   }
-
+  data = () => {
+    console.log(this.props);
+    //return this.props.history.push(window.location.pathname + "/test");
+    window.open(window.location.pathname + "/test/" + this.props.index, "QR코드", "width=770, height=800, location = no");
+  }
 
   render() {
     const { Row, Cell } = Table;
-
-    let data = () => {
-      console.log(this.props.data);
-      return [<mailInform
-        data={this.props.data}
-      />,window.open(window.location.pathname + "/mailInform", "QR코드", "width=770, height=800, location = no")];
-    }
     return(
       <Row>
         <Cell>{this.props.data.senderName}</Cell>
@@ -44,7 +41,7 @@ class MailRow extends Component {
             <Button color="purple" basic onClick={this.mailLink}>
               클릭
             </Button>
-            <Button color="purple" basic onClick={data}>
+            <Button color="purple" basic onClick={this.data}>
               test
             </Button>
         </Cell>
