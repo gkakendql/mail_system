@@ -14,8 +14,10 @@ class Pass extends Component {
       }
     };
     post(url, formData, config).then(res => {
+      const data = res.data;
       this.props.history.push(
-        "/mail/" + this.props.match.params.address + "/mailInform"
+        "/mail/" + this.props.match.params.address + "/mailInform",
+        {data}
       );
       //console.log(this.props.history);
     });

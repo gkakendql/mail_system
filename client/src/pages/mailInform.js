@@ -30,8 +30,9 @@ class mailInform extends Component {
 
 
   render() {
+  this.props.history.block();
   let  read = ()  =>{
-      console.log(this.props.data);
+      console.log(this.props.location.state.data);
     }
 
     return (
