@@ -15,7 +15,7 @@ class MailRow extends Component {
   };
   qrPopup = () => {
     window.open(
-      "/qrCode/" + this.props.index,
+      window.location.pathname + "/qr/" + this.props.index,
       "QR코드",
       "width=508, height=453, location = no"
     );
