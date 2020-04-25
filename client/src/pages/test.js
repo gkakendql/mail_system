@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-<<<<<<< HEAD
 import { Button, Dimmer, Loader } from "semantic-ui-react";
-=======
-import { Button } from "semantic-ui-react";
->>>>>>> 3000c8dc2f47d0d1706f1407d3a55ade036e43d2
 import { post } from "axios";
 
 class Pass extends Component {
@@ -33,14 +29,11 @@ class Pass extends Component {
   }
 
   render() {
-<<<<<<< HEAD
     return(
     <Dimmer active inverted>
       <Loader inverted>Loading</Loader>
     </Dimmer>);
-=======
-    return <h2>Intializing...</h2>;
->>>>>>> 3000c8dc2f47d0d1706f1407d3a55ade036e43d2
+
   }
 }
 
