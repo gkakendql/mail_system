@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Icon } from "semantic-ui-react";
+import { Button, Table, Icon,  Dimmer, Loader, Segment, Image } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import MailRow from "../../components/List/MailRow";
 import { Link } from "react-router-dom";
@@ -26,7 +26,7 @@ class mailList extends Component {
     let response = await post(url, formData, config);
     console.log(response.data);
     if(response.data.senderLength != 0 ){
-    
+
         let data= response.data.datas;
         let length = response.data.length;
 
@@ -54,10 +54,11 @@ class mailList extends Component {
   renderRow() {
     console.log(this.testdata);
     if(this.testdata.length != 0){
-      return this.testdata.data.map((data) => {
+      return this.testdata.data.map((data, index) => {
         return <MailRow
           data={data}
-          length={this.testdata.length}
+          key={index}
+          index={index}
           />;
         })
       }
@@ -68,7 +69,12 @@ class mailList extends Component {
       console.log(
         "This happens 2nd - after the class is constructed. You will not see this element because React is still computing changes to the DOM."
       );
-      return <h2>Intializing...</h2>;
+      return(
+          <Dimmer active inverted>
+            <Loader inverted>Loading</Loader>
+          </Dimmer>
+        );
+
     }
     const { Header, Row, HeaderCell, Body } = Table;
     return (

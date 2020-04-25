@@ -8,6 +8,7 @@ import juso from './pages/juso';
 import mailList from './pages/mail/mailList';
 import list from './containers/PostContainer/PostContainer';
 import mailInform from './pages/mailInform';
+import test from './pages/test';
 import qr from './components/qrCode';
 
 
@@ -21,6 +22,7 @@ class App extends Component {
           <Route path="/juso" component={juso}/>
           <Route path="/mailInform" component={mailInform}/>
           <Route exact path="/mail/:address" component={mailList}/>
+          <Route exact path="/mail/:address/test/:index" component={test}/>
           <Route exact path="/mail/:address/addMail" component={addMail}/>
           <Route exact path="/mail/:address/mailInform" component={mailInform}/>
           <Route path="/qrcode" component={qr}/>

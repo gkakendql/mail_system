@@ -49,11 +49,13 @@ app.post("/api/getmail", upload.single("image"), async (req, res) => {
     console.log("현재 데이터" + senderLength + "개");
     let datas = [];
     for (var i = 0; i < senderLength; i++) {
-      const senderInfo = await mail.methods.senderInfos(i).call();
-      const mailInfo = await mail.methods.mailInfos(i).call();
-
-      var newObj = Object.assign({}, senderInfo, mailInfo);
-      datas.push(newObj);
+      await Promise.all([
+        mail.methods.senderInfos(i).call(),
+        mail.methods.mailInfos(i).call()
+      ]).then(value => {
+        var newObj = Object.assign({}, value[0], value[1]);
+        datas.push(newObj);
+      });
     }
 
     console.log(datas);
@@ -91,7 +93,6 @@ app.post("/api/addmail", upload.single("image"), async (req, res) => {
       JSON.parse(Mail.interface),
       req.body.address
     );
-    console.log("11111111111111111111111");
     await Promise.all([
       mail.methods
         .addSenderInfo(
@@ -121,11 +122,23 @@ app.post("/api/addmail", upload.single("image"), async (req, res) => {
           gas: 1500000
         })
     ]);
-    console.log("222222222222");
     res.send();
   } catch (err) {
     console.log(err.message);
   }
+});
+
+app.post("/api/getonemail", upload.single("image"), async (req, res) => {
+  const mail = new web3.eth.Contract(
+    JSON.parse(Mail.interface),
+    req.body.address
+  );
+  const senderInfo = await mail.methods.senderInfos(req.body.index).call();
+  const mailInfo = await mail.methods.mailInfos(req.body.index).call();
+
+  var newObj = Object.assign({}, senderInfo, mailInfo);
+
+  res.send(newObj);
 });
 
 app.post("/api/users", upload.single("image"), (req, res) => {
