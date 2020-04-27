@@ -1,6 +1,5 @@
 pragma solidity ^0.4.17;
 pragma experimental ABIEncoderV2;
-
 contract MailFactory {
     address[] public deployedMails;
 
@@ -41,24 +40,6 @@ contract Mail{
         bool complete;
     }
 
-    struct SendAgencyInfo{
-        string sendAgency;
-        string sendAgency_time;
-    }
-
-    struct HubInfo{
-        string hub;
-        string hub_time;
-    }
-
-    struct CompliteInfo{
-        string complite_time;
-    }
-
-    struct ReceiveAgencyInfo{
-        string receiveAgency;
-        string receiveAgency_time;
-    }
 
    struct UserData{
         string senderName;
@@ -66,21 +47,10 @@ contract Mail{
         string productName;
         uint productPrice;
         uint quantity;
-        string sendAgency;
-        string sendAgency_time;
-        string hub;
-        string hub_time;
-        string receiveAgency;
-        string receiveAgency_time;
-        string complite_time;
     }
 
     SenderInfo[] public senderInfos;
     MailInfo[] public mailInfos;
-    SendAgencyInfo[] public sendAgencyInfos;
-    HubInfo[] public hubInfos;
-    ReceiveAgencyInfo[] public receiveAgencyInfos;
-    CompliteInfo[] public compliteInfos;
 
     address public manager;
 
@@ -113,6 +83,69 @@ contract Mail{
         mailInfos.push(newMailInfo);
     }
 
+
+
+
+    function mailComplete(uint index, string password) public {
+        MailInfo storage mailInfo = mailInfos[index];
+
+        //require(배송기사 맞는지 확인 넣기)
+
+        require(mailInfo.password == keccak256(password));
+        mailInfo.complete = true;
+    }
+
+    function senderLength() public view returns (uint) {
+        return senderInfos.length;
+    }
+    function mailLength() public view returns (uint) {
+        return mailInfos.length;
+    }
+
+    function getSome(uint index) public returns (UserData u)
+    {
+        UserData memory u;
+        u.senderName = senderInfos[index].senderName;
+        u.receiverName = senderInfos[index].receiverName;
+        u.productName = mailInfos[index].productName;
+        u.productPrice = mailInfos[index].productPrice;
+        u.quantity = mailInfos[index].quantity;
+        return u;
+    }
+
+
+
+    function data(uint index) public view returns (UserData memory) {
+        UserData memory u1 = getSome(index);
+        return (u1.senderName);
+    }
+}
+
+contract Shipping{
+     struct SendAgencyInfo{
+        string sendAgency;
+        string sendAgency_time;
+    }
+
+    struct HubInfo{
+        string hub;
+        string hub_time;
+    }
+
+    struct ReceiveAgencyInfo{
+        string receiveAgency;
+        string receiveAgency_time;
+    }
+
+    struct CompliteInfo{
+        string complite_time;
+    }
+
+    SendAgencyInfo [] public sendAgencyInfos;
+    HubInfo [] public hubInfos;
+    ReceiveAgencyInfo [] public receiveAgencyInfos;
+    CompliteInfo [] public compliteInfos;
+
     function setSendAgency(string name, string time) public {
         SendAgencyInfo memory newSendAgency = SendAgencyInfo({
             sendAgency: name,
@@ -142,29 +175,6 @@ contract Mail{
             complite_time: time
         });
         compliteInfos.push(newComplite);
-    }
-
-
-    function mailComplete(uint index, string password) public {
-        MailInfo storage mailInfo = mailInfos[index];
-
-        //require(배송기사 맞는지 확인 넣기)
-
-        require(mailInfo.password == keccak256(password));
-        mailInfo.complete = true;
-    }
-
-    function senderLength() public view returns (uint) {
-        return senderInfos.length;
-    }
-    function mailLength() public view returns (uint) {
-        return mailInfos.length;
-    }
-
-
-    function data(uint index) public view returns (UserData) {
-            UserData memory userData = UserData(senderInfos[index].senderName, senderInfos[index].receiverName,mailInfos[index].productName, mailInfos[index].productPrice, mailInfos[index].quantity, sendAgencyInfos[index].sendAgency, sendAgencyInfos[index].sendAgency_time, hubInfos[index].hub, hubInfos[index].hub_time, receiveAgencyInfos[index].receiveAgency_time, receiveAgencyInfos[index].receiveAgency_time, compliteInfos[index].complite_time);
-            return userData;
     }
 
 }
