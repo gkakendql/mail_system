@@ -25,9 +25,9 @@ class MailRow extends Component {
     const { Row, Cell } = Table;
     return (
       <Row>
-        <Cell>{this.props.data.senderName}</Cell>
-        <Cell>{this.props.data.senderAddress}</Cell>
-        <Cell>{this.props.data.senderPhone}</Cell>
+        <Cell>{this.props.data.receiverName}</Cell>
+        <Cell>{this.props.data.receiverAddress}</Cell>
+        <Cell>{this.props.data.receiverPhone}</Cell>
         <Cell>{this.props.data.productName}</Cell>
         <Cell>
           {" "}

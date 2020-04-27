@@ -97,11 +97,19 @@ app.post("/api/addmail", upload.single("image"), async (req, res) => {
       mail.methods
         .addSenderInfo(
           req.body.sender_name,
-          req.body.sender_p1 + req.body.sender_p2 + req.body.sender_p3,
+          req.body.sender_p1 +
+            "-" +
+            req.body.sender_p2 +
+            "-" +
+            req.body.sender_p3,
           req.body.sender_email,
           req.body.Spost + " " + req.body.Saddr1 + " " + req.body.Saddr2,
           req.body.receiver_name,
-          req.body.receiver_p1 + req.body.receiver_p2 + req.body.receiver_p3,
+          req.body.receiver_p1 +
+            "-" +
+            req.body.receiver_p2 +
+            "-" +
+            req.body.receiver_p3,
           req.body.Rpost + " " + req.body.Raddr1 + " " + req.body.Raddr2
         )
         .send({
@@ -137,6 +145,27 @@ app.post("/api/getonemail", upload.single("image"), async (req, res) => {
   const mailInfo = await mail.methods.mailInfos(req.body.index).call();
 
   var newObj = Object.assign({}, senderInfo, mailInfo);
+
+  res.send(newObj);
+});
+
+app.post("/api/getusermail", upload.single("image"), async (req, res) => {
+  const mail = new web3.eth.Contract(
+    JSON.parse(Mail.interface),
+    req.body.address
+  );
+  const senderInfo = await mail.methods.senderInfos(req.body.index).call();
+  console.log(senderInfo);
+  const mailInfo = await mail.methods.mailInfos(req.body.index).call();
+  console.log(mailInfo);
+
+  var newObj = {
+    senderName: senderInfo.senderName,
+    receiverName: senderInfo.receiverName,
+    productName: mailInfo.productName,
+    quantity: mailInfo.quantity
+  };
+  console.log(newObj);
 
   res.send(newObj);
 });

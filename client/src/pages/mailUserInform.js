@@ -42,20 +42,6 @@ class mailInform extends Component {
                   <Table.Cell textAlign="center">이름</Table.Cell>
                   <Table.Cell>{this.props.location.state.data.senderName}</Table.Cell>
                 </Table.Row>
-                <Table.Row>
-                  <Table.Cell textAlign="center">연락처</Table.Cell>
-                  <Table.Cell>{this.props.location.state.data.senderPhone}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell textAlign="center">이메일</Table.Cell>
-                  <Table.Cell>{this.props.location.state.data.senderEmail}</Table.Cell>
-                </Table.Row>
-                <Table.Row verticalAlign="top">
-                  <Table.Cell textAlign="center">주소</Table.Cell>
-                  <Table.Cell verticalAlign="top">
-                    {this.props.location.state.data.senderAddress}
-                  </Table.Cell>
-                </Table.Row>
               </Table.Body>
               <Table.Header>
                 <Table.Row>
@@ -67,16 +53,6 @@ class mailInform extends Component {
                 <Table.Row>
                   <Table.Cell textAlign="center">이름</Table.Cell>
                   <Table.Cell>{this.props.location.state.data.receiverName}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell textAlign="center">연락처</Table.Cell>
-                  <Table.Cell>{this.props.location.state.data.receiverPhone}</Table.Cell>
-                </Table.Row>
-                <Table.Row verticalAlign="top">
-                  <Table.Cell textAlign="center">주소</Table.Cell>
-                  <Table.Cell verticalAlign="top">
-                    {this.props.location.state.data.receiverAddress}
-                  </Table.Cell>
                 </Table.Row>
               </Table.Body>
               <Table.Header>
@@ -94,25 +70,29 @@ class mailInform extends Component {
                   <Table.Cell textAlign="center">포장수량</Table.Cell>
                   <Table.Cell>{this.props.location.state.data.quantity}</Table.Cell>
                 </Table.Row>
+              </Table.Body>
+            </Table>
+
+            <Table basic style={{ width: "700px" }}>
+              <Table.Header>
                 <Table.Row>
-                  <Table.Cell textAlign="center">부피</Table.Cell>
-                  <Table.Cell>          {" "}
-                            {(() => {
-                              switch (this.props.location.state.data.weight) {
-                                case "1":
-                                  return "극소";
-                                case "2":
-                                  return "소";
-                                case "3":
-                                  return "중";
-                                case "4":
-                                  return "대";
-                              }
-                            })()}</Table.Cell>
+                  <Table.HeaderCell width={4}>배송상태</Table.HeaderCell>
+                  <Table.HeaderCell></Table.HeaderCell>
                 </Table.Row>
-                <Table.Row verticalAlign="top">
-                  <Table.Cell textAlign="center">특이사항</Table.Cell>
-                  <Table.Cell>{this.props.location.state.data.other}</Table.Cell>
+              </Table.Header>
+
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell textAlign="center">단계</Table.Cell>
+                  <Table.Cell textAlign="center">처리</Table.Cell>
+                  <Table.Cell textAlign="center">상품상태</Table.Cell>
+                  <Table.Cell textAlign="center">담당 점소</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell textAlign="center">상품인수</Table.Cell>
+                  <Table.Cell textAlign="center">2020-04-15 18:00</Table.Cell>
+                  <Table.Cell textAlign="center">고객으로부터 상품을 인수 받았습니다.</Table.Cell>
+                  <Table.Cell textAlign="center">서울 강남</Table.Cell>
                 </Table.Row>
               </Table.Body>
             </Table>
