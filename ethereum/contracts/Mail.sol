@@ -15,6 +15,11 @@ contract MailFactory {
 }
 
 contract Mail{
+    address user = 0x6CcEf8229c07c937A22437eeb13261c4e4b7e835;
+    address sendAgency = 0x50FE4cBC3C1E70A3B28590959Dc6aa7906829706;
+    address hub = 0x0F66CDf7fEA7697f0269be6fdEB15Ed1d10D8560;
+    address receiveAgency = 0x28bB21cE6d500Ba545eDcE0FAAcbDa6203E4a15C;
+
     struct SenderInfo {
         string senderName;
         string senderPhone;
@@ -38,7 +43,6 @@ contract Mail{
     struct SendAgencyInfo{
         string sendAgency;
         string sendAgency_time;
-
     }
 
     struct HubInfo{
@@ -46,9 +50,28 @@ contract Mail{
         string hub_time;
     }
 
+    struct CompliteInfo{
+        string complite_time;
+    }
+
     struct ReceiveAgencyInfo{
         string receiveAgency;
         string receiveAgency_time;
+    }
+
+   struct UserData{
+        string senderName;
+        string receiverName;
+        string productName;
+        uint productPrice;
+        uint quantity;
+        string sendAgency;
+        string sendAgency_time;
+        string hub;
+        string hub_time;
+        string receiveAgency;
+        string receiveAgency_time;
+        string complite_time;
     }
 
     SenderInfo[] public senderInfos;
@@ -56,6 +79,8 @@ contract Mail{
     SendAgencyInfo[] public sendAgencyInfos;
     HubInfo[] public hubInfos;
     ReceiveAgencyInfo[] public receiveAgencyInfos;
+    CompliteInfo[] public compliteInfos;
+
     address public manager;
 
     function Mail(address creator) public {
@@ -110,7 +135,14 @@ contract Mail{
         });
         receiveAgencyInfos.push(newReceiveAgency);
     }
-    
+
+    function setComplitey(string time) public {
+        CompliteInfo memory newComplite = CompliteInfo({
+            complite_time: time
+        });
+        compliteInfos.push(newComplite);
+    }
+
 
     function mailComplete(uint index, string password) public {
         MailInfo storage mailInfo = mailInfos[index];
@@ -127,4 +159,11 @@ contract Mail{
     function mailLength() public view returns (uint) {
         return mailInfos.length;
     }
+
+
+    function data(uint index) public view returns (UserData) {
+            UserData memory userData = UserData(senderInfos[index].senderName, senderInfos[index].receiverName,mailInfos[index].productName, mailInfos[index].productPrice, mailInfos[index].quantity, sendAgencyInfos[index].sendAgency, sendAgencyInfos[index].sendAgency_time, hubInfos[index].hub, hubInfos[index].hub_time, receiveAgencyInfos[index].receiveAgency_time, receiveAgencyInfos[index].receiveAgency_time, compliteInfos[index].complite_time);
+            return userData;
+    }
+
 }
