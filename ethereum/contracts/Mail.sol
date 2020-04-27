@@ -20,57 +20,65 @@ contract Mail{
         string senderPhone;
         string senderEmail;
         string senderAddress;
-    }
-
-    struct ReceiverInfo{
         string receiverName;
         string receiverPhone;
         string receiverAddress;
     }
 
     struct MailInfo{
-        string mailName;
-        uint price;
-        uint mailQuantity;
+        string productName;
+        uint productPrice;
+        uint quantity;
         uint weight;
         string other;
         bytes32 password;
         bool complete;
     }
 
+    struct SendAgencyInfo{
+        string sendAgency;
+        string sendAgency_time;
+
+    }
+
+    struct HubInfo{
+        string hub;
+        string hub_time;
+    }
+
+    struct ReceiveAgencyInfo{
+        string receiveAgency;
+        string receiveAgency_time;
+    }
+
     SenderInfo[] public senderInfos;
-    ReceiverInfo[] public receiverInfos;
     MailInfo[] public mailInfos;
+    SendAgencyInfo[] public sendAgencyInfos;
+    HubInfo[] public hubInfos;
+    ReceiveAgencyInfo[] public receiveAgencyInfos;
     address public manager;
 
     function Mail(address creator) public {
         manager = creator;// manager address로 변경 하기
     }
 
-    function addSenderInfo(string senderName, string senderPhone, string senderEmail, string senderAddress) public {
+    function addSenderInfo(string senderName, string senderPhone, string senderEmail, string senderAddress, string receiverName, string receiverPhone, string receiverAddress) public {
         SenderInfo memory newSenderInfo = SenderInfo({
             senderName: senderName,
             senderPhone: senderPhone,
             senderEmail: senderEmail,
-            senderAddress: senderAddress
-        });
-        senderInfos.push(newSenderInfo);
-    }
-
-    function addReceiverInfo(string receiverName, string receiverPhone, string receiverAddress) public {
-        ReceiverInfo memory newReceiverInfo = ReceiverInfo({
+            senderAddress: senderAddress,
             receiverName: receiverName,
             receiverPhone: receiverPhone,
             receiverAddress: receiverAddress
         });
-        receiverInfos.push(newReceiverInfo);
+        senderInfos.push(newSenderInfo);
     }
-
-    function addMailInfo(string mailName,uint price, uint mailQuantity, uint weight,string other, string password) public {
+    function addMailInfo(string productName, uint productPrice, uint quantity, uint weight, string other, string password) public {
         MailInfo memory newMailInfo = MailInfo({
-            mailName: mailName,
-            price: price,
-            mailQuantity: mailQuantity,
+            productName: productName,
+            productPrice: productPrice,
+            quantity: quantity,
             weight: weight,
             other: other,
             password: keccak256(password),
@@ -78,6 +86,31 @@ contract Mail{
         });
         mailInfos.push(newMailInfo);
     }
+
+    function setSendAgency(string name, string time) public {
+        SendAgencyInfo memory newSendAgency = SendAgencyInfo({
+            sendAgency: name,
+            sendAgency_time: time
+        });
+        sendAgencyInfos.push(newSendAgency);
+    }
+
+    function setHub(string name, string time) public {
+       HubInfo memory newHub = HubInfo({
+            hub: name,
+            hub_time: time
+        });
+        hubInfos.push(newHub);
+    }
+
+    function setReceiveAgency(string name, string time) public {
+        ReceiveAgencyInfo memory newReceiveAgency = ReceiveAgencyInfo({
+            receiveAgency: name,
+            receiveAgency_time: time
+        });
+        receiveAgencyInfos.push(newReceiveAgency);
+    }
+    
 
     function mailComplete(uint index, string password) public {
         MailInfo storage mailInfo = mailInfos[index];
@@ -91,11 +124,6 @@ contract Mail{
     function senderLength() public view returns (uint) {
         return senderInfos.length;
     }
-
-    function receiverLength() public view returns (uint) {
-        return receiverInfos.length;
-    }
-
     function mailLength() public view returns (uint) {
         return mailInfos.length;
     }
