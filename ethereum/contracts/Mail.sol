@@ -19,6 +19,8 @@ contract Mail{
     address sendAgency = 0x50FE4cBC3C1E70A3B28590959Dc6aa7906829706;
     address hub = 0x0F66CDf7fEA7697f0269be6fdEB15Ed1d10D8560;
     address receiveAgency = 0x28bB21cE6d500Ba545eDcE0FAAcbDa6203E4a15C;
+    address delivery = 0x5312eCc1BA898b251ce09d480e5Ea84D4d19e109;
+
 
     struct SenderInfo {
         string senderName;
@@ -43,11 +45,18 @@ contract Mail{
 
    struct UserData{
         string senderName;
+        string senderPhone;
+        string senderAddress;
         string receiverName;
+        string receiverPhone;
+        string receiverAddress;
         string productName;
-        uint productPrice;
         uint quantity;
+        bytes32 password;
     }
+
+
+
 
     SenderInfo[] public senderInfos;
     MailInfo[] public mailInfos;
@@ -83,9 +92,6 @@ contract Mail{
         mailInfos.push(newMailInfo);
     }
 
-
-
-
     function mailComplete(uint index, string password) public {
         MailInfo storage mailInfo = mailInfos[index];
 
@@ -102,27 +108,98 @@ contract Mail{
         return mailInfos.length;
     }
 
-    function getSome(uint index) public returns (UserData u)
+    function getUser(uint index) public view returns (UserData)
     {
         UserData memory u;
         u.senderName = senderInfos[index].senderName;
+        u.senderPhone = "";
+        u.senderAddress = "";
         u.receiverName = senderInfos[index].receiverName;
+        u.receiverPhone = "";
+        u.receiverAddress = "";
         u.productName = mailInfos[index].productName;
-        u.productPrice = mailInfos[index].productPrice;
         u.quantity = mailInfos[index].quantity;
+        u.password = "";
+        return u;
+    }
+
+    function getStaff(uint index) public view returns (UserData)
+    {
+        UserData memory u;
+        u.senderName = "";
+        u.senderPhone = "";
+        u.senderAddress = senderInfos[index].receiverAddress;
+        u.receiverName = "";
+        u.receiverPhone = "";
+        u.receiverAddress = "";
+        u.productName = "";
+        u.quantity = mailInfos[index].quantity;
+        u.password = "";
+        return u;
+    }
+
+    function getDelivery(uint index) public view returns (UserData)
+    {
+        UserData memory u;
+        u.senderName = senderInfos[index].senderName;
+        u.senderPhone = senderInfos[index].senderPhone;
+        u.senderAddress = senderInfos[index].senderAddress;
+        u.receiverName = senderInfos[index].receiverName;
+        u.receiverPhone = senderInfos[index].receiverPhone;
+        u.receiverAddress = senderInfos[index].receiverAddress;
+        u.productName = mailInfos[index].productName;
+        u.quantity = mailInfos[index].quantity;
+        u.password = mailInfos[index].password;
         return u;
     }
 
 
+    function shipping_data(uint index) public view returns (UserData) {
+        if(msg.sender == user)
+        {
+            UserData memory user_data = getUser(index);
+            return user_data;
+        }
 
-    function data(uint index) public view returns (UserData memory) {
-        UserData memory u1 = getSome(index);
-        return (u1.senderName);
+        else if(msg.sender == sendAgency)
+        {
+            UserData memory sendAgency_data = getStaff(index);
+            return sendAgency_data;
+        }
+
+        else if(msg.sender == hub)
+        {
+            UserData memory hub_data = getStaff(index);
+            return hub_data;
+        }
+
+        else if(msg.sender == receiveAgency)
+        {
+            UserData memory receiveAgency_data = getStaff(index);
+            return receiveAgency_data;
+        }
+
+        else if(msg.sender == delivery )
+        {
+            UserData memory delivery_data = getDelivery(index);
+            return delivery_data;
+        }
     }
 }
 
 contract Shipping{
-     struct SendAgencyInfo{
+
+    struct UserShippingData{
+        string sendAgency;
+        string sendAgency_time;
+        string hub;
+        string hub_time;
+        string receiveAgency;
+        string receiveAgency_time;
+        string complite_time;
+    }
+
+    struct SendAgencyInfo{
         string sendAgency;
         string sendAgency_time;
     }
@@ -177,4 +254,16 @@ contract Shipping{
         compliteInfos.push(newComplite);
     }
 
+    function getUserShipping(uint index) public view returns (UserShippingData)
+    {
+        UserShippingData memory s;
+        s.sendAgency = sendAgencyInfos[index].sendAgency;
+        s.sendAgency_time = sendAgencyInfos[index].sendAgency;
+        s.hub = hubInfos[index].hub;
+        s.hub_time = hubInfos[index].hub_time;
+        s.receiveAgency = receiveAgencyInfos[index].receiveAgency;
+        s.receiveAgency_time = receiveAgencyInfos[index].receiveAgency_time;
+        s.complite_time = compliteInfos[index].complite_time;
+        return s;
+    }
 }
