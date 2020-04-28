@@ -56,8 +56,6 @@ contract Mail{
     }
 
 
-
-
     SenderInfo[] public senderInfos;
     MailInfo[] public mailInfos;
 
@@ -91,6 +89,9 @@ contract Mail{
         });
         mailInfos.push(newMailInfo);
     }
+
+
+
 
     function mailComplete(uint index, string password) public {
         MailInfo storage mailInfo = mailInfos[index];
@@ -188,18 +189,7 @@ contract Mail{
 }
 
 contract Shipping{
-
-    struct UserShippingData{
-        string sendAgency;
-        string sendAgency_time;
-        string hub;
-        string hub_time;
-        string receiveAgency;
-        string receiveAgency_time;
-        string complite_time;
-    }
-
-    struct SendAgencyInfo{
+     struct SendAgencyInfo{
         string sendAgency;
         string sendAgency_time;
     }
@@ -223,47 +213,54 @@ contract Shipping{
     ReceiveAgencyInfo [] public receiveAgencyInfos;
     CompliteInfo [] public compliteInfos;
 
-    function setSendAgency(string name, string time) public {
+    function addSendAgency() public {
         SendAgencyInfo memory newSendAgency = SendAgencyInfo({
-            sendAgency: name,
-            sendAgency_time: time
+            sendAgency: "",
+            sendAgency_time: ""
         });
         sendAgencyInfos.push(newSendAgency);
     }
 
-    function setHub(string name, string time) public {
+    function addHub() public {
        HubInfo memory newHub = HubInfo({
-            hub: name,
-            hub_time: time
+            hub: "",
+            hub_time: ""
         });
         hubInfos.push(newHub);
     }
 
-    function setReceiveAgency(string name, string time) public {
+    function addReceiveAgency() public {
         ReceiveAgencyInfo memory newReceiveAgency = ReceiveAgencyInfo({
-            receiveAgency: name,
-            receiveAgency_time: time
+            receiveAgency: "",
+            receiveAgency_time: ""
         });
         receiveAgencyInfos.push(newReceiveAgency);
     }
 
-    function setComplitey(string time) public {
+    function addComplitey() public {
         CompliteInfo memory newComplite = CompliteInfo({
-            complite_time: time
+            complite_time: ""
         });
         compliteInfos.push(newComplite);
     }
 
-    function getUserShipping(uint index) public view returns (UserShippingData)
-    {
-        UserShippingData memory s;
-        s.sendAgency = sendAgencyInfos[index].sendAgency;
-        s.sendAgency_time = sendAgencyInfos[index].sendAgency;
-        s.hub = hubInfos[index].hub;
-        s.hub_time = hubInfos[index].hub_time;
-        s.receiveAgency = receiveAgencyInfos[index].receiveAgency;
-        s.receiveAgency_time = receiveAgencyInfos[index].receiveAgency_time;
-        s.complite_time = compliteInfos[index].complite_time;
-        return s;
+    function setSendAgency(uint index, string name, string time) public {
+        sendAgencyInfos[index].sendAgency= name;
+        sendAgencyInfos[index].sendAgency_time= time;
     }
+
+    function setHub(uint index, string name, string time) public {
+        hubInfos[index].hub= name;
+        hubInfos[index].hub_time= time;
+    }
+
+    function setReceiveAgency(uint index, string name, string time) public {
+        receiveAgencyInfos[index].receiveAgency= name;
+        receiveAgencyInfos[index].receiveAgency_time= time;
+    }
+
+    function setComplitey(uint index, string time) public {
+        compliteInfos[index].complite_time = time;
+    }
+
 }
