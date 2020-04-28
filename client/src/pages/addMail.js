@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import Layout from "../components/Layout";
 import { post } from "axios";
-import { Input, Form, Button, Table, Dropdown, Message} from "semantic-ui-react";
+import {
+  Input,
+  Form,
+  Button,
+  Table,
+  Dropdown,
+  Message
+} from "semantic-ui-react";
 
 let opt;
 
@@ -62,8 +69,10 @@ class App extends Component {
 
   print = () => {
     alert("접수 되었습니다.");
-    return this.props.history.push(window.location.pathname.replace("/addMail",""));
-  }
+    return this.props.history.push(
+      window.location.pathname.replace("/addMail", "")
+    );
+  };
 
   senderJusoPopup = () => {
     opt = 0;
@@ -101,52 +110,45 @@ class App extends Component {
         "content-type": "multipart/form-data"
       }
     };
-    return post(url,formData,config);
+    return post(url, formData, config);
   };
-
-
-
 
   addmail = async () => {
     this.setState({ loading: true });
-      const url = "/api/addmail";
-      const formData = new FormData();
-      formData.append("sender_name", this.state.sender_name);
-      formData.append("sender_p1", this.state.sender_p1);
-      formData.append("sender_p2", this.state.sender_p2);
-      formData.append("sender_p3", this.state.sender_p3);
-      formData.append("sender_email", this.state.sender_email);
-      formData.append("Spost", this.state.Spost);
-      formData.append("Saddr1", this.state.Saddr1);
-      formData.append("Saddr2", this.state.Saddr2);
+    const url = "/api/addmail";
+    const formData = new FormData();
+    formData.append("sender_name", this.state.sender_name);
+    formData.append("sender_p1", this.state.sender_p1);
+    formData.append("sender_p2", this.state.sender_p2);
+    formData.append("sender_p3", this.state.sender_p3);
+    formData.append("sender_email", this.state.sender_email);
+    formData.append("Spost", this.state.Spost);
+    formData.append("Saddr1", this.state.Saddr1);
+    formData.append("Saddr2", this.state.Saddr2);
 
-      formData.append("receiver_name", this.state.receiver_name);
-      formData.append("receiver_p1", this.state.receiver_p1);
-      formData.append("receiver_p2", this.state.receiver_p2);
-      formData.append("receiver_p3", this.state.receiver_p3);
-      formData.append("Rpost", this.state.Rpost);
-      formData.append("Raddr1", this.state.Raddr1);
-      formData.append("Raddr2", this.state.Raddr2);
+    formData.append("receiver_name", this.state.receiver_name);
+    formData.append("receiver_p1", this.state.receiver_p1);
+    formData.append("receiver_p2", this.state.receiver_p2);
+    formData.append("receiver_p3", this.state.receiver_p3);
+    formData.append("Rpost", this.state.Rpost);
+    formData.append("Raddr1", this.state.Raddr1);
+    formData.append("Raddr2", this.state.Raddr2);
 
-      formData.append("product_name", this.state.product_name);
-      formData.append("product_price", this.state.product_price);
-      formData.append("quantity", this.state.quantity);
-      formData.append("volume", this.state.volume);
-      formData.append("others", this.state.others);
-      formData.append("password", this.state.password);
+    formData.append("product_name", this.state.product_name);
+    formData.append("product_price", this.state.product_price);
+    formData.append("quantity", this.state.quantity);
+    formData.append("volume", this.state.volume);
+    formData.append("others", this.state.others);
+    formData.append("password", this.state.password);
 
-      formData.append("address", this.props.match.params.address);
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data"
-        }
-      };
-      await post(url, formData, config);
-      this.testB();
-
-
-
-
+    formData.append("address", this.props.match.params.address);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    };
+    await post(url, formData, config);
+    this.testB();
   };
 
   testF = data => {
@@ -447,22 +449,21 @@ class App extends Component {
               </Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Button onClick={this.handleFormSubmit} attached="bottom"
+              <Button
+                onClick={this.handleFormSubmit}
+                attached="bottom"
                 loading={this.state.loading}
                 type="submit"
                 basic
-                color="violet">
+                color="violet"
+              >
                 접수
               </Button>
 
               <Button onClick={this.getmail} attached="bottom">
                 꺼내기
               </Button>
-              <Message
-                error
-                header="Oops!"
-                content={this.state.errorMessage}
-              />
+              <Message error header="Oops!" content={this.state.errorMessage} />
             </Table.Row>
           </Table.Body>
         </Table>

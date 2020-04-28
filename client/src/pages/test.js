@@ -24,6 +24,27 @@ class Pass extends Component {
     });
   };
 
+  getDeliveryMail = () => {
+    const url = "/api/getonemail";
+    const formData = new FormData();
+    formData.append("address", this.props.match.params.address);
+    formData.append("index", this.props.match.params.index);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    };
+    post(url, formData, config).then(res => {
+      const data = res.data;
+      const index = this.props.match.params.index;
+      this.props.history.push(
+        "/mail/" + this.props.match.params.address + "/mailDeliveryInform",
+        { data, index }
+      );
+      //console.log(this.props.history);
+    });
+  };
+
   getMail = () => {
     const url = "/api/getusermail";
     const formData = new FormData();
@@ -47,14 +68,17 @@ class Pass extends Component {
 
   constructor(props) {
     super(props);
+    window.web3 = new Web3(window.ethereum);
     window.addEventListener("load", () => {
-      if (typeof web3 !== "undefined") {
-        console.log(Web3.currentProvider);
-        this.getAdminMail();
-      } else {
-        this.getMail();
-      }
-
+      window.web3.eth.getAccounts().then(account => {
+        if (account[0] == "0x6CcEf8229c07c937A22437eeb13261c4e4b7e835") {
+          this.getAdminMail();
+        } else if (account[0] == "0x5312eCc1BA898b251ce09d480e5Ea84D4d19e109") {
+          this.getDeliveryMail();
+        } else {
+          this.getMail();
+        }
+      });
     });
   }
 

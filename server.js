@@ -67,6 +67,25 @@ app.post("/api/getmail", upload.single("image"), async (req, res) => {
   }
 });
 
+app.post("/api/complete", upload.single("image"), async (req, res) => {
+  try {
+    const accounts = await web3.eth.getAccounts();
+    console.log(accounts);
+    const mail = new web3.eth.Contract(
+      JSON.parse(Mail.interface),
+      req.body.address
+    );
+    await mail.methods.mailComplete(req.body.index, req.body.password).send({
+      from: accounts[0],
+      gas: 2000000
+    });
+    res.send(true);
+  } catch (err) {
+    res.send(false);
+    console.log(err.message);
+  }
+});
+
 app.use("/image", express.static("./upload"));
 
 app.post("/api/address", async (req, res) => {
@@ -78,7 +97,7 @@ app.post("/api/address", async (req, res) => {
     console.log(address);
     await test.send({
       from: accounts[0],
-      gas: 1500000
+      gas: 2000000
     });
     res.send(address);
   } catch (err) {
