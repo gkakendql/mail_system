@@ -3,7 +3,7 @@ const CampaignFactory = require('./build/MailFactory.json');
 
 const instance = new web3.eth.Contract(
   JSON.parse(CampaignFactory.interface),
-  '0x27094Fd0326987C188815dA1EF5B390eBE68C5E7'
+  '0xcc4cF458f6217BCEa6A59FF22939fFe2A6B5dE11'
 );
 
 module.exports = instance;
