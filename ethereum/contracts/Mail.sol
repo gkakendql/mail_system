@@ -96,13 +96,20 @@ contract Mail{
 
 
 
-    function mailComplete(uint index, string password) public {
+    function mailComplete(uint index, string password) public returns(string) {
         MailInfo storage mailInfo = mailInfos[index];
 
-        //require(배송기사 맞는지 확인 넣기)
+        if(mailInfo.password == keccak256(password))
+        {
+          mailInfo.complete = true;
+          return "true";
+        }
 
-        require(mailInfo.password == keccak256(password));
-        mailInfo.complete = true;
+        else
+        {
+          return "false";
+        }
+
     }
 
     function senderLength() public view returns (uint) {

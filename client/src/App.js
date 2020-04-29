@@ -3,18 +3,17 @@ import { Route } from 'react-router-dom';
 
 import signUp from './pages/signUp';
 import login from './pages/login';
-import addMail from './pages/addMail';
-import juso from './pages/juso';
-import mailList from './pages/mail/mailList';
-import list from './containers/PostContainer/PostContainer';
-import mailInform from './pages/mailInform';
-import mailUserInform from './pages/mailUserInform';
-import mailHubInform from './pages/mailHubInform';
-import mailDeliveryInform from './pages/mailDeliveryInform';
-import test from './pages/test';
-import qrCode from './pages/qrCode';
-import qr from './components/qrCode';
+import list from './pages/userList';
+import juso from './components/juso';
 
+import addMail from './pages/mail/addMail';
+import mailDeliveryInform from './pages/mail/mailDeliveryInform';
+import mailHubInform from './pages/mail/mailHubInform';
+import mailUserInform from './pages/mail/mailUserInform';
+import mailInform from './pages/mail/mailInform';
+import mailList from './pages/mail/mailList';
+import qrCode from './pages/mail/qrCode';
+import qrResult from './pages/mail/qrResult';
 
 class App extends Component {
   render() {
@@ -26,14 +25,13 @@ class App extends Component {
           <Route path="/juso" component={juso}/>
           <Route path="/mailInform" component={mailInform}/>
           <Route exact path="/mail/:address" component={mailList}/>
-          <Route exact path="/mail/:address/test/:index" component={test}/>
+          <Route exact path="/mail/:address/qrResult/:index" component={qrResult}/>
           <Route exact path="/mail/:address/qr/:index" component={qrCode}/>
           <Route exact path="/mail/:address/addMail" component={addMail}/>
           <Route exact path="/mail/:address/mailInform" component={mailInform}/>
           <Route exact path="/mail/:address/mailUserInform" component={mailUserInform}/>
           <Route exact path="/mail/:address/mailHubInform" component={mailHubInform}/>
           <Route exact path="/mail/:address/mailDeliveryInform" component={mailDeliveryInform}/>
-          <Route path="/qrcode" component={qr}/>
         </div>
     );
   }

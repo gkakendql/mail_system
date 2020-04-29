@@ -4,7 +4,7 @@ import Layout from "../../components/Layout";
 import MailRow from "../../components/List/MailRow";
 import { Link } from "react-router-dom";
 import { post } from "axios";
-import mailInform  from "../mailInform";
+import mailInform  from "./mailInform";
 
 class mailList extends Component {
   constructor(props) {

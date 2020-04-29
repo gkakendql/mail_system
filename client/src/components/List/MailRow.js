@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Table, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import mailInform from "../../pages/mailInform";
+import mailInform from "../../pages/mail/mailInform";
 
 class MailRow extends Component {
   data = () => {
     console.log(this.props);
     //return this.props.history.push(window.location.pathname + "/test");
     window.open(
-      window.location.pathname + "/test/" + this.props.index,
+      window.location.pathname + "/qrResult/" + this.props.index,
       "QR코드",
       "width=770, height=800, location = no"
     );
