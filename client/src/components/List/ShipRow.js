@@ -6,10 +6,10 @@ class MailRow extends Component {
     const { Row, Cell } = Table;
     return (
       <Row>
-        <Cell>상품 이동중</Cell>
-        <Cell>{this.props.data.hub_time}</Cell>
-        <Cell>배송지역으로 상품이 이동중입니다.</Cell>
-        <Cell>{this.props.data.hub}</Cell>
+        <Cell textAlign="center">상품 이동중</Cell>
+        <Cell textAlign="center">{this.props.data.hub_time}</Cell>
+        <Cell textAlign="center">배송지역으로 상품이 이동중입니다.</Cell>
+        <Cell textAlign="center">{this.props.data.hub}</Cell>
       </Row>
     );
   }
