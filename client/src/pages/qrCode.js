@@ -14,7 +14,7 @@ class qrCode extends Component {
   }
   value = () => {
     console.log('http:/www.safetypost.xyz/mail/'+this.props.match.params.address+'/test/'+this.props.match.params.index);
-    return ('http:/www.safetypost.xyz/mail/'+this.props.match.params.address+'/test/'+this.props.match.params.index);
+    return ('localhost:3000/mail/'+this.props.match.params.address+'/test/'+this.props.match.params.index);
   }
 
 

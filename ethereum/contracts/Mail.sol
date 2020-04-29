@@ -58,6 +58,7 @@ contract Mail{
 
     SenderInfo[] public senderInfos;
     MailInfo[] public mailInfos;
+    address[] public ship;
 
     address public manager;
 
@@ -88,6 +89,8 @@ contract Mail{
             complete: false
         });
         mailInfos.push(newMailInfo);
+        address newShip = new Shipping();// manager address로 변경 하기
+        ship.push(newShip);
     }
 
 
@@ -189,78 +192,34 @@ contract Mail{
 }
 
 contract Shipping{
-     struct SendAgencyInfo{
-        string sendAgency;
-        string sendAgency_time;
-    }
 
     struct HubInfo{
         string hub;
         string hub_time;
     }
 
-    struct ReceiveAgencyInfo{
-        string receiveAgency;
-        string receiveAgency_time;
-    }
-
-    struct CompliteInfo{
-        string complite_time;
-    }
-
-    SendAgencyInfo [] public sendAgencyInfos;
     HubInfo [] public hubInfos;
-    ReceiveAgencyInfo [] public receiveAgencyInfos;
-    CompliteInfo [] public compliteInfos;
+    string complite_time;
 
-    function addSendAgency() public {
-        SendAgencyInfo memory newSendAgency = SendAgencyInfo({
-            sendAgency: "",
-            sendAgency_time: ""
-        });
-        sendAgencyInfos.push(newSendAgency);
+    function Shipping() public {
+        complite_time ="";
     }
 
-    function addHub() public {
+    function getComp() public view returns (string){
+        return complite_time;
+    }
+
+    function addHub(string hub, string time) public {
        HubInfo memory newHub = HubInfo({
-            hub: "",
-            hub_time: ""
+            hub: hub,
+            hub_time: time
         });
         hubInfos.push(newHub);
     }
 
-    function addReceiveAgency() public {
-        ReceiveAgencyInfo memory newReceiveAgency = ReceiveAgencyInfo({
-            receiveAgency: "",
-            receiveAgency_time: ""
-        });
-        receiveAgencyInfos.push(newReceiveAgency);
-    }
 
-    function addComplitey() public {
-        CompliteInfo memory newComplite = CompliteInfo({
-            complite_time: ""
-        });
-        compliteInfos.push(newComplite);
-    }
-
-    function setSendAgency(uint index, string name, string time) public {
-        sendAgencyInfos[index].sendAgency= name;
-        sendAgencyInfos[index].sendAgency_time= time;
-    }
-
-    function setHub(uint index, string name, string time) public {
-        hubInfos[index].hub= name;
-        hubInfos[index].hub_time= time;
-    }
-
-    function setReceiveAgency(uint index, string name, string time) public {
-        receiveAgencyInfos[index].receiveAgency= name;
-        receiveAgencyInfos[index].receiveAgency_time= time;
-    }
-
-    function setComplitey(uint index, string time) public {
-        compliteInfos[index].complite_time = time;
+    function hubLength() public view returns (uint) {
+        return hubInfos.length;
     }
 
 }

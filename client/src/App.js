@@ -9,6 +9,7 @@ import mailList from './pages/mail/mailList';
 import list from './containers/PostContainer/PostContainer';
 import mailInform from './pages/mailInform';
 import mailUserInform from './pages/mailUserInform';
+import mailHubInform from './pages/mailHubInform';
 import mailDeliveryInform from './pages/mailDeliveryInform';
 import test from './pages/test';
 import qrCode from './pages/qrCode';
@@ -30,6 +31,7 @@ class App extends Component {
           <Route exact path="/mail/:address/addMail" component={addMail}/>
           <Route exact path="/mail/:address/mailInform" component={mailInform}/>
           <Route exact path="/mail/:address/mailUserInform" component={mailUserInform}/>
+          <Route exact path="/mail/:address/mailHubInform" component={mailHubInform}/>
           <Route exact path="/mail/:address/mailDeliveryInform" component={mailDeliveryInform}/>
           <Route path="/qrcode" component={qr}/>
         </div>

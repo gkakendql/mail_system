@@ -1,5 +1,6 @@
 const web3 = require("./ethereum/test");
 const Mail = require("./ethereum/build/Mail.json");
+const Ship = require("./ethereum/build/Shipping.json");
 const factory = require("./ethereum/factory");
 
 const fs = require("fs");
@@ -97,7 +98,7 @@ app.post("/api/address", async (req, res) => {
     console.log(address);
     await test.send({
       from: accounts[0],
-      gas: 2000000
+      gas: 3000000
     });
     res.send(address);
   } catch (err) {
@@ -166,6 +167,106 @@ app.post("/api/getonemail", upload.single("image"), async (req, res) => {
   var newObj = Object.assign({}, senderInfo, mailInfo);
 
   res.send(newObj);
+});
+
+app.post("/api/getship", upload.single("image"), async (req, res) => {
+  const mail = new web3.eth.Contract(
+    JSON.parse(Mail.interface),
+    req.body.address
+  );
+  const shipAddr = await mail.methods.ship(req.body.index).call();
+  const ship = new web3.eth.Contract(JSON.parse(Ship.interface), shipAddr);
+  const hubLength = await ship.methods.hubLength().call();
+  console.log(hubLength);
+  if (hubLength == 0) {
+    let today = new Date();
+    const time = today.toLocaleString();
+    console.log(time);
+
+    try {
+      const accounts = await web3.eth.getAccounts();
+      await ship.methods.addHub("서울 HUB", time).send({
+        from: accounts[0],
+        gas: 1500000
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+    const senderInfo = await mail.methods.senderInfos(req.body.index).call();
+    const hubData = await ship.methods.hubInfos(0).call();
+    var newObj = Object.assign({
+      receiverAddress: senderInfo.receiverAddress,
+      hub: hubData.hub,
+      hub_time: hubData.hub_time
+    });
+    res.send(newObj);
+  } else {
+    const senderInfo = await mail.methods.senderInfos(req.body.index).call();
+    const hubData = await ship.methods.hubInfos(hubLength - 1).call();
+    var newObj = Object.assign({
+      receiverAddress: senderInfo.receiverAddress,
+      hub: hubData.hub,
+      hub_time: hubData.hub_time
+    });
+    res.send(newObj);
+  }
+});
+
+app.post("/api/getallhub", upload.single("image"), async (req, res) => {
+  const mail = new web3.eth.Contract(
+    JSON.parse(Mail.interface),
+    req.body.address
+  );
+  const shipAddr = await mail.methods.ship(req.body.index).call();
+  const ship = new web3.eth.Contract(JSON.parse(Ship.interface), shipAddr);
+  const hubLength = await ship.methods.hubLength().call();
+  if (hubLength == 0) {
+    console.log("현재 데이터 0");
+    res.send({
+      length: hubLength
+    });
+  } else {
+    console.log("현재 데이터" + hubLength + "개");
+    let datas = [];
+    for (var i = 0; i < hubLength; i++) {
+      ship.methods
+        .hubInfos(i)
+        .call()
+        .then(value => {
+          datas.push(value);
+        });
+    }
+    const comp = await ship.methods.getComp().call();
+    console.log(comp);
+      res.send({
+        datas: datas,
+        comp: comp,
+        length: hubLength
+      });
+  }
+});
+
+app.post("/api/addhub", upload.single("image"), async (req, res) => {
+  const mail = new web3.eth.Contract(
+    JSON.parse(Mail.interface),
+    req.body.address
+  );
+  const shipAddr = await mail.methods.ship(req.body.index).call();
+  const ship = new web3.eth.Contract(JSON.parse(Ship.interface), shipAddr);
+  let today = new Date();
+  const time = today.toLocaleString();
+  console.log(time);
+
+  try {
+    const accounts = await web3.eth.getAccounts();
+    await ship.methods.addHub(req.body.hub, time).send({
+      from: accounts[0],
+      gas: 1500000
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+  res.send();
 });
 
 app.post("/api/getusermail", upload.single("image"), async (req, res) => {
