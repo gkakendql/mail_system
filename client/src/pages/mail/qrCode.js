@@ -13,8 +13,8 @@ class qrCode extends Component {
     this.getMail();
   }
   value = () => {
-    console.log('http:/www.safetypost.xyz/mail/'+this.props.match.params.address+'/test/'+this.props.match.params.index);
-    return ('localhost:3000/mail/'+this.props.match.params.address+'/test/'+this.props.match.params.index);
+    console.log('https:/www.safetypost.xyz/mail/'+this.props.match.params.address+'/qrResult/'+this.props.match.params.index);
+    return ('https:/www.safetypost.xyz/mail/'+this.props.match.params.address+'/qrResult/'+this.props.match.params.index);
   }
 
 
