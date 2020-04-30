@@ -20,7 +20,7 @@ const connection = mysql.createConnection({
   user: conf.user,
   password: conf.password,
   port: conf.port,
-  database: conf.database
+  database: conf.database,
 });
 connection.connect();
 
@@ -44,7 +44,7 @@ app.post("/api/getmail", upload.single("image"), async (req, res) => {
   if (senderLength == 0) {
     console.log("현재 데이터 0");
     res.send({
-      senderLength: senderLength
+      senderLength: senderLength,
     });
   } else {
     console.log("현재 데이터" + senderLength + "개");
@@ -52,8 +52,8 @@ app.post("/api/getmail", upload.single("image"), async (req, res) => {
     for (var i = 0; i < senderLength; i++) {
       await Promise.all([
         mail.methods.senderInfos(i).call(),
-        mail.methods.mailInfos(i).call()
-      ]).then(value => {
+        mail.methods.mailInfos(i).call(),
+      ]).then((value) => {
         var newObj = Object.assign({}, value[0], value[1]);
         datas.push(newObj);
       });
@@ -63,7 +63,7 @@ app.post("/api/getmail", upload.single("image"), async (req, res) => {
 
     res.send({
       datas: datas,
-      length: senderLength
+      length: senderLength,
     });
   }
 });
@@ -76,22 +76,21 @@ app.post("/api/complete", upload.single("image"), async (req, res) => {
       JSON.parse(Mail.interface),
       req.body.address
     );
-    const result = await mail.methods.mailComplete(req.body.index, req.body.password).send({
-      from: accounts[0],
-      gas: 2000000
-    });
-    if(result == "true"){
+    const result = await mail.methods
+      .mailComplete(req.body.index, req.body.password)
+      .send({
+        from: accounts[0],
+        gas: 2000000,
+      });
+    if (result == "true") {
       res.send({
-        result: result
+        result: result,
+      });
+    } else {
+      res.send({
+        result: result,
       });
     }
-
-    else{
-      res.send({
-        result: result
-      });
-    }
-
   } catch (err) {
     res.send(false);
     console.log(err.message);
@@ -109,7 +108,7 @@ app.post("/api/address", async (req, res) => {
     console.log(address);
     await test.send({
       from: accounts[0],
-      gas: 3000000
+      gas: 3000000,
     });
     res.send(address);
   } catch (err) {
@@ -145,7 +144,7 @@ app.post("/api/addmail", upload.single("image"), async (req, res) => {
         )
         .send({
           from: accounts[0],
-          gas: 1500000
+          gas: 1500000,
         }),
       mail.methods
         .addMailInfo(
@@ -158,8 +157,8 @@ app.post("/api/addmail", upload.single("image"), async (req, res) => {
         )
         .send({
           from: accounts[0],
-          gas: 1500000
-        })
+          gas: 1500000,
+        }),
     ]);
     res.send();
   } catch (err) {
@@ -198,7 +197,7 @@ app.post("/api/getship", upload.single("image"), async (req, res) => {
       const accounts = await web3.eth.getAccounts();
       await ship.methods.addHub("서울 HUB", time).send({
         from: accounts[0],
-        gas: 1500000
+        gas: 1500000,
       });
     } catch (err) {
       console.log(err.message);
@@ -208,7 +207,7 @@ app.post("/api/getship", upload.single("image"), async (req, res) => {
     var newObj = Object.assign({
       receiverAddress: senderInfo.receiverAddress,
       hub: hubData.hub,
-      hub_time: hubData.hub_time
+      hub_time: hubData.hub_time,
     });
     res.send(newObj);
   } else {
@@ -217,7 +216,7 @@ app.post("/api/getship", upload.single("image"), async (req, res) => {
     var newObj = Object.assign({
       receiverAddress: senderInfo.receiverAddress,
       hub: hubData.hub,
-      hub_time: hubData.hub_time
+      hub_time: hubData.hub_time,
     });
     res.send(newObj);
   }
@@ -234,26 +233,22 @@ app.post("/api/getallhub", upload.single("image"), async (req, res) => {
   if (hubLength == 0) {
     console.log("현재 데이터 0");
     res.send({
-      length: hubLength
+      length: hubLength,
     });
   } else {
     console.log("현재 데이터" + hubLength + "개");
     let datas = [];
     for (var i = 0; i < hubLength; i++) {
-      ship.methods
-        .hubInfos(i)
-        .call()
-        .then(value => {
-          datas.push(value);
-        });
+      const value = await ship.methods.hubInfos(i).call();
+      datas.push(value);
     }
     const comp = await ship.methods.getComp().call();
     console.log(comp);
-      res.send({
-        datas: datas,
-        comp: comp,
-        length: hubLength
-      });
+    res.send({
+      datas: datas,
+      comp: comp,
+      length: hubLength,
+    });
   }
 });
 
@@ -272,7 +267,7 @@ app.post("/api/addhub", upload.single("image"), async (req, res) => {
     const accounts = await web3.eth.getAccounts();
     await ship.methods.addHub(req.body.hub, time).send({
       from: accounts[0],
-      gas: 1500000
+      gas: 1500000,
     });
   } catch (err) {
     console.log(err.message);
@@ -294,7 +289,7 @@ app.post("/api/getusermail", upload.single("image"), async (req, res) => {
     senderName: senderInfo.senderName,
     receiverName: senderInfo.receiverName,
     productName: mailInfo.productName,
-    quantity: mailInfo.quantity
+    quantity: mailInfo.quantity,
   };
   console.log(newObj);
 
