@@ -44,7 +44,8 @@ class mailDeliveryInform extends Component {
     };
     let response = await post(url, formData, config);
 
-    if(response.result == "true"){
+    if(response.data.result == true){
+      alert("배송이 완료되었습니다.");
       window.close();
     }
 

@@ -76,19 +76,20 @@ app.post("/api/complete", upload.single("image"), async (req, res) => {
       JSON.parse(Mail.interface),
       req.body.address
     );
-    const result = await mail.methods
+    await mail.methods
       .mailComplete(req.body.index, req.body.password)
       .send({
         from: accounts[0],
         gas: 2000000,
       });
-    if (result == "true") {
+    const result = await mail.methods.mailInfos(req.body.index).call();
+    if (result.complete == true) {
       res.send({
-        result: result,
+        result: result.complete,
       });
     } else {
       res.send({
-        result: result,
+        result: result.complete,
       });
     }
   } catch (err) {
