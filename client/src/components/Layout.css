@@ -1,0 +1,17 @@
+.ui.container {
+  width: 800px !important;
+  margin-top: 20px;
+}
+.mailRow {
+  font-size: 90%;
+}
+
+@media (max-width: 767px) {
+  .item {
+    font-size: 75%;
+  }
+  .ui.segment {
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+}

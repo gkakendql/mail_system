@@ -1,10 +1,19 @@
 import React, { Component } from "react";
-import { Button, Table, Icon,  Dimmer, Loader, Segment, Image } from "semantic-ui-react";
+import {
+  Button,
+  Table,
+  Icon,
+  Dimmer,
+  Loader,
+  Segment,
+  Image,
+  Responsive
+} from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import MailRow from "../../components/List/MailRow";
 import { Link } from "react-router-dom";
 import { post } from "axios";
-import mailInform  from "./mailInform";
+import mailInform from "./mailInform";
 
 class mailList extends Component {
   constructor(props) {
@@ -25,18 +34,15 @@ class mailList extends Component {
     };
     let response = await post(url, formData, config);
     console.log(response.data);
-    if(response.data.senderLength != 0 ){
+    if (response.data.senderLength != 0) {
+      let data = response.data.datas;
+      let length = response.data.length;
 
-        let data= response.data.datas;
-        let length = response.data.length;
-
-        this.testdata = {
-          data, length
-        };
-
-    }
-
-    else {
+      this.testdata = {
+        data,
+        length
+      };
+    } else {
       let length = response.data.senderLength;
       this.testdata = {
         length
@@ -53,15 +59,11 @@ class mailList extends Component {
 
   renderRow() {
     console.log(this.testdata);
-    if(this.testdata.length != 0){
+    if (this.testdata.length != 0) {
       return this.testdata.data.map((data, index) => {
-        return <MailRow
-          data={data}
-          key={index}
-          index={index}
-          />;
-        })
-      }
+        return <MailRow data={data} key={index} index={index} />;
+      });
+    }
   }
 
   render() {
@@ -69,43 +71,86 @@ class mailList extends Component {
       console.log(
         "This happens 2nd - after the class is constructed. You will not see this element because React is still computing changes to the DOM."
       );
-      return(
-          <Dimmer active inverted>
-            <Loader inverted>Loading</Loader>
-          </Dimmer>
-        );
-
+      return (
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      );
     }
     const { Header, Row, HeaderCell, Body } = Table;
     return (
       <Layout>
-        <Button
-          icon
-          labelPosition="left"
-          onClick={this.mailButton}
-          basic
-          color="purple"
-          floated="left"
-          style={{ marginBottom: "10px" }}
-        >
-          <Icon name="add" />
-          택배 접수
-        </Button>
+        <Responsive as={Segment} minWidth={768}>
+          <Button
+            icon
+            labelPosition="left"
+            onClick={this.mailButton}
+            basic
+            color="purple"
+            floated="left"
+            style={{ marginBottom: "10px" }}
+          >
+            <Icon name="add" />
+            택배 접수
+          </Button>
 
-        <Table>
-          <Header>
-            <Row>
-              <HeaderCell style={{ minWidth: "6em" }}>받는 사람</HeaderCell>
-              <HeaderCell>주소</HeaderCell>
-              <HeaderCell style={{ minWidth: "9em" }}>연락처</HeaderCell>
-              <HeaderCell style={{ minWidth: "6em" }}>상품명</HeaderCell>
-              <HeaderCell style={{ minWidth: "6em" }}>배송 상태</HeaderCell>
-              <HeaderCell style={{ minWidth: "7em" }}>QR코드</HeaderCell>
-              <HeaderCell style={{ minWidth: "7em" }}>상세 정보</HeaderCell>
-            </Row>
-          </Header>
-          <Body>{this.renderRow()}</Body>
-        </Table>
+          <Table>
+            <Header>
+              <Row>
+                <HeaderCell style={{ minWidth: "6em" }}>받는 사람</HeaderCell>
+                <HeaderCell>주소</HeaderCell>
+                <HeaderCell style={{ minWidth: "9em" }}>연락처</HeaderCell>
+                <HeaderCell style={{ minWidth: "6em" }}>상품명</HeaderCell>
+                <HeaderCell style={{ minWidth: "6em" }}>배송 상태</HeaderCell>
+                <HeaderCell style={{ minWidth: "7em" }}>QR코드</HeaderCell>
+                <HeaderCell style={{ minWidth: "7em" }}>상세 정보</HeaderCell>
+              </Row>
+            </Header>
+            <Body>{this.renderRow()}</Body>
+          </Table>
+        </Responsive>
+
+        <Responsive as={Segment} maxWidth={767}>
+          <Button
+            icon
+            labelPosition="left"
+            onClick={this.mailButton}
+            basic
+            color="purple"
+            floated="left"
+            style={{ marginBottom: "10px" }}
+          >
+            <Icon name="add" />
+            택배 접수
+          </Button>
+
+          <Table>
+            <Header>
+              <Row className="tableH">
+                <HeaderCell textAlign="center" style={{ minWidth: "6em" }}>
+                  받는 사람
+                </HeaderCell>
+                <HeaderCell textAlign="center">주소</HeaderCell>
+                <HeaderCell textAlign="center" style={{ minWidth: "9em" }}>
+                  연락처
+                </HeaderCell>
+                <HeaderCell textAlign="center" style={{ minWidth: "6em" }}>
+                  상품명
+                </HeaderCell>
+                <HeaderCell textAlign="center" style={{ minWidth: "6em" }}>
+                  배송 상태
+                </HeaderCell>
+                <HeaderCell textAlign="center" style={{ minWidth: "7em" }}>
+                  QR코드
+                </HeaderCell>
+                <HeaderCell textAlign="center" style={{ minWidth: "7em" }}>
+                  상세 정보
+                </HeaderCell>
+              </Row>
+            </Header>
+            <Body>{this.renderRow()}</Body>
+          </Table>
+        </Responsive>
       </Layout>
     );
   }

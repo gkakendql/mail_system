@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default () => {
   return (
   <Segment inverted color='blue'>
-    <Header as='h1'  textAlign='center' size='huge' style={{ marginTop: '18px', height:'50px'}}>
+    <Header as='h1'  textAlign='center' size='huge' style={{ marginTop: '15px', height:'45px'}}>
       <font size="6" >
 
           <Link to='/' className="item"  style={{color:'white'}}>

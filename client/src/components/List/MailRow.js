@@ -24,7 +24,7 @@ class MailRow extends Component {
   render() {
     const { Row, Cell } = Table;
     return (
-      <Row disabled={this.props.data.complete}>
+      <Row className="mailRow" disabled={this.props.data.complete}>
         <Cell>{this.props.data.receiverName}</Cell>
         <Cell>{this.props.data.receiverAddress}</Cell>
         <Cell>{this.props.data.receiverPhone}</Cell>
