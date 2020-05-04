@@ -86,8 +86,8 @@ class mailUserInform extends Component {
     }
 
     return (
-      <Container style={{ width: "800px", padding: 40 }}>
-        <Table basic style={{ width: "500px" }}>
+      <Container style={{ maxWidth: "800px", padding: 40}}>
+        <Table basic style={{ maxWidth: "500px" }}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell width={4}>보내는 분</Table.HeaderCell>
@@ -136,8 +136,8 @@ class mailUserInform extends Component {
             </Table.Row>
           </Table.Body>
         </Table>
-
-        <Table basic style={{ width: "700px" }}>
+        <Segment>
+        <Table className='userInform' basic style={{ width: "700px"}}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell width={4}>배송상태</Table.HeaderCell>
@@ -163,6 +163,7 @@ class mailUserInform extends Component {
           </Table.Header>
           <Table.Body>{this.renderRow()}</Table.Body>
         </Table>
+        </Segment>
 
         <Button color="red" basic onClick={this.exit}>
           닫기
